@@ -2,14 +2,23 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { ToyContract } from "./Toy";
+import { IERC20LikeContract } from "./IERC20Like";
+import { ITokenVestingContract } from "./ITokenVesting";
+import { MockERC20Contract } from "./MockERC20";
+import { TokenVestingContract } from "./TokenVesting";
 
 declare global {
   namespace Truffle {
     interface Artifacts {
-      require(name: "Toy"): ToyContract;
+      require(name: "IERC20Like"): IERC20LikeContract;
+      require(name: "ITokenVesting"): ITokenVestingContract;
+      require(name: "MockERC20"): MockERC20Contract;
+      require(name: "TokenVesting"): TokenVestingContract;
     }
   }
 }
 
-export { ToyContract, ToyInstance } from "./Toy";
+export { IERC20LikeContract, IERC20LikeInstance } from "./IERC20Like";
+export { ITokenVestingContract, ITokenVestingInstance } from "./ITokenVesting";
+export { MockERC20Contract, MockERC20Instance } from "./MockERC20";
+export { TokenVestingContract, TokenVestingInstance } from "./TokenVesting";
