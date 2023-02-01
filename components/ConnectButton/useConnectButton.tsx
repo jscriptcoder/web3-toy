@@ -2,6 +2,7 @@ import { Modal, notification } from 'antd'
 import { useCallback, useState } from 'react'
 import { useAppContext } from '../../context/appStore'
 import {
+  getContractDetails,
   requestAccounts,
 } from '../../utils/toy/contract'
 
@@ -35,6 +36,15 @@ export default function useConnectButton() {
       try {
         // This will prompt the user for wallet connection
         const accounts = await requestAccounts()
+
+        // Then we gather information to add to our global state
+        const address = accounts[0]
+        const { balance } =
+          await getContractDetails(address)
+
+        appDispatch({ address, balance })
+
+        notifySuccessfulConnection(balance)
       } catch (err) {
         console.error(err)
 
