@@ -1,10 +1,7 @@
 import { Modal, notification } from 'antd'
 import { useCallback, useState } from 'react'
 import { useAppContext } from '../../context/appStore'
-import {
-  getContractDetails,
-  requestAccounts,
-} from '../../utils/toy/contract'
+import { getBalance, requestAccounts } from '../../utils/web3'
 
 function notifySuccessfulConnection(balance: string): void {
   notification.success({
@@ -39,8 +36,7 @@ export default function useConnectButton() {
 
         // Then we gather information to add to our global state
         const address = accounts[0]
-        const { balance } =
-          await getContractDetails(address)
+        const balance = await getBalance(address)
 
         appDispatch({ address, balance })
 

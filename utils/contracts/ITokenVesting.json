@@ -1,0 +1,2656 @@
+{
+  "contractName": "ITokenVesting",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "pendingOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferPending",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "oldReceiver",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newReceiver",
+          "type": "address"
+        }
+      ],
+      "name": "ReceiverChanged",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "token",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "destination",
+          "type": "address"
+        }
+      ],
+      "name": "RecoveredToken",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "receiver_",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokensClaimed_",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "destination_",
+          "type": "address"
+        }
+      ],
+      "name": "TokensClaimed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "totalTokens_",
+          "type": "uint256"
+        }
+      ],
+      "name": "VestingFunded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "receiver_",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokensClaimed_",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "destination_",
+          "type": "address"
+        }
+      ],
+      "name": "VestingKilled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "receiver_",
+          "type": "address"
+        }
+      ],
+      "name": "VestingScheduleSet",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "owner_",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pendingOwner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "pendingOwner_",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner_",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "acceptOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "token",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "token_",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalVestingsTokens",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "totalVestingsTokens_",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "receiver_",
+          "type": "address"
+        }
+      ],
+      "name": "vestingScheduleOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "startTime_",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "cliff_",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalPeriods_",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timePerPeriod_",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalTokens_",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "tokensClaimed_",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "receivers_",
+          "type": "address[]"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "startTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "cliff",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "totalPeriods",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timePerPeriod",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "totalTokens",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "tokensClaimed",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct ITokenVesting.VestingSchedule[]",
+          "name": "vestings_",
+          "type": "tuple[]"
+        }
+      ],
+      "name": "setVestingSchedules",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "totalTokens_",
+          "type": "uint256"
+        }
+      ],
+      "name": "fundVesting",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "oldReceiver_",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "newReceiver_",
+          "type": "address"
+        }
+      ],
+      "name": "changeReceiver",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "receiver_",
+          "type": "address"
+        }
+      ],
+      "name": "claimableTokens",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "claimableTokens_",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "destination_",
+          "type": "address"
+        }
+      ],
+      "name": "claimTokens",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "receiver_",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "destination_",
+          "type": "address"
+        }
+      ],
+      "name": "killVesting",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "token_",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "destination_",
+          "type": "address"
+        }
+      ],
+      "name": "recoverToken",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"pendingOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferPending\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"oldReceiver\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newReceiver\",\"type\":\"address\"}],\"name\":\"ReceiverChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"destination\",\"type\":\"address\"}],\"name\":\"RecoveredToken\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"receiver_\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"tokensClaimed_\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"destination_\",\"type\":\"address\"}],\"name\":\"TokensClaimed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"totalTokens_\",\"type\":\"uint256\"}],\"name\":\"VestingFunded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"receiver_\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"tokensClaimed_\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"destination_\",\"type\":\"address\"}],\"name\":\"VestingKilled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"receiver_\",\"type\":\"address\"}],\"name\":\"VestingScheduleSet\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"acceptOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"oldReceiver_\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"newReceiver_\",\"type\":\"address\"}],\"name\":\"changeReceiver\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"destination_\",\"type\":\"address\"}],\"name\":\"claimTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"receiver_\",\"type\":\"address\"}],\"name\":\"claimableTokens\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"claimableTokens_\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"totalTokens_\",\"type\":\"uint256\"}],\"name\":\"fundVesting\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"receiver_\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"destination_\",\"type\":\"address\"}],\"name\":\"killVesting\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"owner_\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"pendingOwner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"pendingOwner_\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"token_\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"destination_\",\"type\":\"address\"}],\"name\":\"recoverToken\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"receivers_\",\"type\":\"address[]\"},{\"components\":[{\"internalType\":\"uint256\",\"name\":\"startTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"cliff\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalPeriods\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"timePerPeriod\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalTokens\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"tokensClaimed\",\"type\":\"uint256\"}],\"internalType\":\"struct ITokenVesting.VestingSchedule[]\",\"name\":\"vestings_\",\"type\":\"tuple[]\"}],\"name\":\"setVestingSchedules\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"token\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"token_\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalVestingsTokens\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalVestingsTokens_\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner_\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"receiver_\",\"type\":\"address\"}],\"name\":\"vestingScheduleOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"startTime_\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"cliff_\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalPeriods_\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"timePerPeriod_\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalTokens_\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"tokensClaimed_\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"events\":{\"ReceiverChanged(address,address)\":{\"details\":\"Is emitted when the receiver of a token vesting schedule is changed.\",\"params\":{\"newReceiver\":\"The new receiver of the token vesting schedule.\",\"oldReceiver\":\"The old receiver of the token vesting schedule.\"}},\"RecoveredToken(address,uint256,address)\":{\"details\":\"Is emitted when some ERC20 token is recovered from the contract.\",\"params\":{\"amount\":\"The amount of token recovered.\",\"destination\":\"The destination the token was sent to.\",\"token\":\"The address of the token.\"}},\"TokensClaimed(address,uint256,address)\":{\"details\":\"Is emitted when a receiver claims tokens from its vesting schedule.\",\"params\":{\"destination_\":\"The destination the claimed tokens have been sent to.\",\"receiver_\":\"The receiver of a token vesting schedule.\",\"tokensClaimed_\":\"The amount of tokens claimed.\"}},\"VestingFunded(uint256)\":{\"details\":\"Is emitted when the contract is funded for vesting.\",\"params\":{\"totalTokens_\":\"The total amount of tokens to be vested.\"}},\"VestingKilled(address,uint256,address)\":{\"details\":\"Is emitted when the token vesting schedule for a receiver is killed.\",\"params\":{\"destination_\":\"The destination the token have been sent to.\",\"receiver_\":\"The receiver that had its token vesting schedule killed.\",\"tokensClaimed_\":\"The amount of tokens claimed.\"}},\"VestingScheduleSet(address)\":{\"details\":\"Is emitted when a token vesting schedule is set for a receiver.\",\"params\":{\"receiver_\":\"The receiver of a token vesting schedule.\"}}},\"kind\":\"dev\",\"methods\":{\"acceptOwnership()\":{\"details\":\"Takes ownership of the contract.\"},\"changeReceiver(address,address)\":{\"details\":\"Change the receiver of an existing vesting schedule.\",\"params\":{\"newReceiver_\":\"The new receiver address.\",\"oldReceiver_\":\"The old receiver address.\"}},\"claimTokens(address)\":{\"details\":\"Claim the callers tokens of a vesting schedule.\",\"params\":{\"destination_\":\"The destination to send the tokens.\"}},\"claimableTokens(address)\":{\"details\":\"Returns the amount of claimable tokens for a receiver of a vesting schedule.\",\"params\":{\"receiver_\":\"The receiver address.\"},\"returns\":{\"claimableTokens_\":\"The amount of claimable tokens.\"}},\"fundVesting(uint256)\":{\"details\":\"Fund the contact with tokens that will be vested.\",\"params\":{\"totalTokens_\":\"The amount of tokens that will be supplied to this contract.\"}},\"killVesting(address,address)\":{\"details\":\"Kill the vesting schedule for a receiver.\",\"params\":{\"destination_\":\"The destination to send the tokens.\",\"receiver_\":\"The receiver address.\"}},\"owner()\":{\"details\":\"Returns the owner of the contract.\"},\"pendingOwner()\":{\"details\":\"Returns the pending owner of the contract.\"},\"recoverToken(address,address)\":{\"details\":\"Recover tokens owned by the contract.\",\"params\":{\"destination_\":\"The destination to send the ETH.\",\"token_\":\"The token address.\"}},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner, and clears the pendingOwner, if any.\"},\"setVestingSchedules(address[],(uint256,uint256,uint256,uint256,uint256,uint256)[])\":{\"details\":\"Set the vesting schedules for some receivers, respectively.\",\"params\":{\"receivers_\":\"An array of receivers of vesting schedules.\",\"vestings_\":\"An array of vesting schedules.\"}},\"token()\":{\"details\":\"The vesting token.\"},\"totalVestingsTokens()\":{\"details\":\"The total amount of tokens being vested.\"},\"transferOwnership(address)\":{\"details\":\"Allows a new account to take ownership of the contract.\"},\"vestingScheduleOf(address)\":{\"details\":\"Returns the vesting schedule of a receiver.\",\"params\":{\"receiver_\":\"The receiver of a vesting schedule.\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/ITokenVesting.sol\":\"ITokenVesting\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/ITokenVesting.sol\":{\"keccak256\":\"0x0e9abcad53cd8206b78496a90018fc9d978eee9d046f5e71eafce71ee2736e24\",\"license\":\"UNLICENSED\",\"urls\":[\"bzz-raw://39b250ecaa4ca90ee8e4607b8d9f2a00e1e476cc3adcda3a359091446238c996\",\"dweb:/ipfs/QmTS1kZVPXLTG638CzbvBevX6hxtXDH8rVML24u72GLHCQ\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: UNLICENSED\npragma solidity ^0.8.12;\n\ninterface ITokenVesting {\n\n    /**************************/\n    /*** Contract Ownership ***/\n    /**************************/\n\n    event OwnershipTransferPending(address indexed owner, address indexed pendingOwner);\n\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\n\n    /// @dev Returns the owner of the contract.\n    function owner() external view returns (address owner_);\n\n    /// @dev Returns the pending owner of the contract.\n    function pendingOwner() external view returns (address pendingOwner_);\n\n    /// @dev Leaves the contract without owner, and clears the pendingOwner, if any.\n    function renounceOwnership() external;\n\n    /// @dev Allows a new account to take ownership of the contract.\n    function transferOwnership(address newOwner_) external;\n\n    /// @dev Takes ownership of the contract.\n    function acceptOwnership() external;\n\n    /*********************/\n    /*** Token Vesting ***/\n    /*********************/\n\n    /**\n     * @dev   Is emitted when a token vesting schedule is set for a receiver.\n     * @param receiver_ The receiver of a token vesting schedule.\n     */\n    event VestingScheduleSet(address indexed receiver_);\n\n    /**\n     * @dev   Is emitted when the contract is funded for vesting.\n     * @param totalTokens_ The total amount of tokens to be vested.\n     */\n    event VestingFunded(uint256 totalTokens_);\n\n    /**\n     * @dev   Is emitted when the receiver of a token vesting schedule is changed.\n     * @param oldReceiver The old receiver of the token vesting schedule.\n     * @param newReceiver The new receiver of the token vesting schedule.\n     */\n    event ReceiverChanged(address indexed oldReceiver, address indexed newReceiver);\n\n    /**\n     * @dev   Is emitted when the token vesting schedule for a receiver is killed.\n     * @param receiver_      The receiver that had its token vesting schedule killed.\n     * @param tokensClaimed_ The amount of tokens claimed.\n     * @param destination_   The destination the token have been sent to.\n     */\n    event VestingKilled(address indexed receiver_, uint256 tokensClaimed_, address indexed destination_);\n\n    /**\n     * @dev   Is emitted when a receiver claims tokens from its vesting schedule.\n     * @param receiver_      The receiver of a token vesting schedule.\n     * @param tokensClaimed_ The amount of tokens claimed.\n     * @param destination_   The destination the claimed tokens have been sent to.\n     */\n    event TokensClaimed(address indexed receiver_, uint256 tokensClaimed_, address indexed destination_);\n\n    struct VestingSchedule {\n        uint256 startTime;\n        uint256 cliff;\n        uint256 totalPeriods;\n        uint256 timePerPeriod;\n        uint256 totalTokens;\n        uint256 tokensClaimed;\n    }\n\n    /// @dev The vesting token.\n    function token() external returns (address token_);\n\n    /// @dev The total amount of tokens being vested.\n    function totalVestingsTokens() external returns (uint256 totalVestingsTokens_);\n\n    /**\n     * @dev   Returns the vesting schedule of a receiver.\n     * @param receiver_      The receiver of a vesting schedule.\n     */\n    function vestingScheduleOf(address receiver_) external returns (\n        uint256 startTime_,\n        uint256 cliff_,\n        uint256 totalPeriods_,\n        uint256 timePerPeriod_,\n        uint256 totalTokens_,\n        uint256 tokensClaimed_\n    );\n\n    /**\n     * @dev   Set the vesting schedules for some receivers, respectively.\n     * @param receivers_ An array of receivers of vesting schedules.\n     * @param vestings_  An array of vesting schedules.\n     */\n    function setVestingSchedules(address[] calldata receivers_, VestingSchedule[] calldata vestings_) external;\n\n    /**\n     * @dev   Fund the contact with tokens that will be vested.\n     * @param totalTokens_ The amount of tokens that will be supplied to this contract.\n     */\n    function fundVesting(uint256 totalTokens_) external;\n\n    /**\n     * @dev   Change the receiver of an existing vesting schedule.\n     * @param oldReceiver_ The old receiver address.\n     * @param newReceiver_ The new receiver address.\n     */\n    function changeReceiver(address oldReceiver_, address newReceiver_) external;\n\n    /**\n     * @dev    Returns the amount of claimable tokens for a receiver of a vesting schedule.\n     * @param  receiver_        The receiver address.\n     * @return claimableTokens_ The amount of claimable tokens.\n     */\n    function claimableTokens(address receiver_) external view returns (uint256 claimableTokens_);\n\n    /**\n     * @dev   Claim the callers tokens of a vesting schedule.\n     * @param destination_ The destination to send the tokens.\n     */\n    function claimTokens(address destination_) external;\n\n    /**\n     * @dev   Kill the vesting schedule for a receiver.\n     * @param receiver_    The receiver address.\n     * @param destination_ The destination to send the tokens.\n     */\n    function killVesting(address receiver_, address destination_) external;\n\n    /*********************/\n    /*** Miscellaneous ***/\n    /*********************/\n\n    /**\n     * @dev   Is emitted when some ERC20 token is recovered from the contract.\n     * @param token       The address of the token.\n     * @param amount      The amount of token recovered.\n     * @param destination The destination the token was sent to.\n     */\n    event RecoveredToken(address indexed token, uint256 amount, address indexed destination);\n\n    /**\n     * @dev   Recover tokens owned by the contract.\n     * @param token_       The token address.\n     * @param destination_ The destination to send the ETH.\n     */\n    function recoverToken(address token_, address destination_) external;\n\n}\n",
+  "sourcePath": "/Users/francisco/Repos/web3-toy/contracts/ITokenVesting.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/ITokenVesting.sol",
+    "exportedSymbols": {
+      "ITokenVesting": [
+        182
+      ]
+    },
+    "id": 183,
+    "license": "UNLICENSED",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".12"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "39:24:0"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "ITokenVesting",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 182,
+        "linearizedBaseContracts": [
+          182
+        ],
+        "name": "ITokenVesting",
+        "nameLocation": "75:13:0",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "eventSelector": "8573d4aae9f7fb051c6b88d7440011a1c12376acda6603a45f45bad36a8db4ce",
+            "id": 7,
+            "name": "OwnershipTransferPending",
+            "nameLocation": "202:24:0",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 6,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "owner",
+                  "nameLocation": "243:5:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7,
+                  "src": "227:21:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "227:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 5,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "pendingOwner",
+                  "nameLocation": "266:12:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7,
+                  "src": "250:28:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 4,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "250:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "226:53:0"
+            },
+            "src": "196:84:0"
+          },
+          {
+            "anonymous": false,
+            "eventSelector": "8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+            "id": 13,
+            "name": "OwnershipTransferred",
+            "nameLocation": "292:20:0",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 12,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "previousOwner",
+                  "nameLocation": "329:13:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 13,
+                  "src": "313:29:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 8,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "313:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 11,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "newOwner",
+                  "nameLocation": "360:8:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 13,
+                  "src": "344:24:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "344:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "312:57:0"
+            },
+            "src": "286:84:0"
+          },
+          {
+            "documentation": {
+              "id": 14,
+              "nodeType": "StructuredDocumentation",
+              "src": "376:43:0",
+              "text": "@dev Returns the owner of the contract."
+            },
+            "functionSelector": "8da5cb5b",
+            "id": 19,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "owner",
+            "nameLocation": "433:5:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "438:2:0"
+            },
+            "returnParameters": {
+              "id": 18,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 17,
+                  "mutability": "mutable",
+                  "name": "owner_",
+                  "nameLocation": "472:6:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 19,
+                  "src": "464:14:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 16,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "464:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "463:16:0"
+            },
+            "scope": 182,
+            "src": "424:56:0",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 20,
+              "nodeType": "StructuredDocumentation",
+              "src": "486:51:0",
+              "text": "@dev Returns the pending owner of the contract."
+            },
+            "functionSelector": "e30c3978",
+            "id": 25,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "pendingOwner",
+            "nameLocation": "551:12:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 21,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "563:2:0"
+            },
+            "returnParameters": {
+              "id": 24,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 23,
+                  "mutability": "mutable",
+                  "name": "pendingOwner_",
+                  "nameLocation": "597:13:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 25,
+                  "src": "589:21:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 22,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "589:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "588:23:0"
+            },
+            "scope": 182,
+            "src": "542:70:0",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 26,
+              "nodeType": "StructuredDocumentation",
+              "src": "618:80:0",
+              "text": "@dev Leaves the contract without owner, and clears the pendingOwner, if any."
+            },
+            "functionSelector": "715018a6",
+            "id": 29,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "renounceOwnership",
+            "nameLocation": "712:17:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 27,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "729:2:0"
+            },
+            "returnParameters": {
+              "id": 28,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "740:0:0"
+            },
+            "scope": 182,
+            "src": "703:38:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 30,
+              "nodeType": "StructuredDocumentation",
+              "src": "747:64:0",
+              "text": "@dev Allows a new account to take ownership of the contract."
+            },
+            "functionSelector": "f2fde38b",
+            "id": 35,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "transferOwnership",
+            "nameLocation": "825:17:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 33,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 32,
+                  "mutability": "mutable",
+                  "name": "newOwner_",
+                  "nameLocation": "851:9:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 35,
+                  "src": "843:17:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 31,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "843:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "842:19:0"
+            },
+            "returnParameters": {
+              "id": 34,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "870:0:0"
+            },
+            "scope": 182,
+            "src": "816:55:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 36,
+              "nodeType": "StructuredDocumentation",
+              "src": "877:41:0",
+              "text": "@dev Takes ownership of the contract."
+            },
+            "functionSelector": "79ba5097",
+            "id": 39,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "acceptOwnership",
+            "nameLocation": "932:15:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 37,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "947:2:0"
+            },
+            "returnParameters": {
+              "id": 38,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "958:0:0"
+            },
+            "scope": 182,
+            "src": "923:36:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 40,
+              "nodeType": "StructuredDocumentation",
+              "src": "1050:155:0",
+              "text": " @dev   Is emitted when a token vesting schedule is set for a receiver.\n @param receiver_ The receiver of a token vesting schedule."
+            },
+            "eventSelector": "ad6c90e26411f59c32b869505ebb4f0298425b4e9dd8aa92c7a9b13442f1fc95",
+            "id": 44,
+            "name": "VestingScheduleSet",
+            "nameLocation": "1216:18:0",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 43,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 42,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "receiver_",
+                  "nameLocation": "1251:9:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 44,
+                  "src": "1235:25:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 41,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1235:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1234:27:0"
+            },
+            "src": "1210:52:0"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 45,
+              "nodeType": "StructuredDocumentation",
+              "src": "1268:145:0",
+              "text": " @dev   Is emitted when the contract is funded for vesting.\n @param totalTokens_ The total amount of tokens to be vested."
+            },
+            "eventSelector": "3677c9434f5ab443cebe570bd0549adb7149a47c57a250985034f42dbea50e46",
+            "id": 49,
+            "name": "VestingFunded",
+            "nameLocation": "1424:13:0",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 48,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 47,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "totalTokens_",
+                  "nameLocation": "1446:12:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 49,
+                  "src": "1438:20:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 46,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1438:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1437:22:0"
+            },
+            "src": "1418:42:0"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 50,
+              "nodeType": "StructuredDocumentation",
+              "src": "1466:242:0",
+              "text": " @dev   Is emitted when the receiver of a token vesting schedule is changed.\n @param oldReceiver The old receiver of the token vesting schedule.\n @param newReceiver The new receiver of the token vesting schedule."
+            },
+            "eventSelector": "d36aafedb017e43b79d3cf6aa1987d3fbb9fff33e1738c71dbf6b2abaadbded0",
+            "id": 56,
+            "name": "ReceiverChanged",
+            "nameLocation": "1719:15:0",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 55,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 52,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "oldReceiver",
+                  "nameLocation": "1751:11:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 56,
+                  "src": "1735:27:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 51,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1735:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 54,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "newReceiver",
+                  "nameLocation": "1780:11:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 56,
+                  "src": "1764:27:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 53,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1764:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1734:58:0"
+            },
+            "src": "1713:80:0"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 57,
+              "nodeType": "StructuredDocumentation",
+              "src": "1799:313:0",
+              "text": " @dev   Is emitted when the token vesting schedule for a receiver is killed.\n @param receiver_      The receiver that had its token vesting schedule killed.\n @param tokensClaimed_ The amount of tokens claimed.\n @param destination_   The destination the token have been sent to."
+            },
+            "eventSelector": "1c74d9d52cde9d0f15138d3131a914ca474348a0e89fd7d8a1599039c1e18e40",
+            "id": 65,
+            "name": "VestingKilled",
+            "nameLocation": "2123:13:0",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 64,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 59,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "receiver_",
+                  "nameLocation": "2153:9:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 65,
+                  "src": "2137:25:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 58,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2137:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 61,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "tokensClaimed_",
+                  "nameLocation": "2172:14:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 65,
+                  "src": "2164:22:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 60,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2164:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 63,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "destination_",
+                  "nameLocation": "2204:12:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 65,
+                  "src": "2188:28:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 62,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2188:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2136:81:0"
+            },
+            "src": "2117:101:0"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 66,
+              "nodeType": "StructuredDocumentation",
+              "src": "2224:306:0",
+              "text": " @dev   Is emitted when a receiver claims tokens from its vesting schedule.\n @param receiver_      The receiver of a token vesting schedule.\n @param tokensClaimed_ The amount of tokens claimed.\n @param destination_   The destination the claimed tokens have been sent to."
+            },
+            "eventSelector": "a96ccbd516e1bb3e6dad792a13a75e8afcf013d3ff446f07416945f5efd46062",
+            "id": 74,
+            "name": "TokensClaimed",
+            "nameLocation": "2541:13:0",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 73,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 68,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "receiver_",
+                  "nameLocation": "2571:9:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 74,
+                  "src": "2555:25:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 67,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2555:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 70,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "tokensClaimed_",
+                  "nameLocation": "2590:14:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 74,
+                  "src": "2582:22:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 69,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2582:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 72,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "destination_",
+                  "nameLocation": "2622:12:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 74,
+                  "src": "2606:28:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 71,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2606:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2554:81:0"
+            },
+            "src": "2535:101:0"
+          },
+          {
+            "canonicalName": "ITokenVesting.VestingSchedule",
+            "id": 87,
+            "members": [
+              {
+                "constant": false,
+                "id": 76,
+                "mutability": "mutable",
+                "name": "startTime",
+                "nameLocation": "2683:9:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 87,
+                "src": "2675:17:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 75,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2675:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 78,
+                "mutability": "mutable",
+                "name": "cliff",
+                "nameLocation": "2710:5:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 87,
+                "src": "2702:13:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 77,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2702:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 80,
+                "mutability": "mutable",
+                "name": "totalPeriods",
+                "nameLocation": "2733:12:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 87,
+                "src": "2725:20:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 79,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2725:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 82,
+                "mutability": "mutable",
+                "name": "timePerPeriod",
+                "nameLocation": "2763:13:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 87,
+                "src": "2755:21:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 81,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2755:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 84,
+                "mutability": "mutable",
+                "name": "totalTokens",
+                "nameLocation": "2794:11:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 87,
+                "src": "2786:19:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 83,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2786:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 86,
+                "mutability": "mutable",
+                "name": "tokensClaimed",
+                "nameLocation": "2823:13:0",
+                "nodeType": "VariableDeclaration",
+                "scope": 87,
+                "src": "2815:21:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 85,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "2815:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "VestingSchedule",
+            "nameLocation": "2649:15:0",
+            "nodeType": "StructDefinition",
+            "scope": 182,
+            "src": "2642:201:0",
+            "visibility": "public"
+          },
+          {
+            "documentation": {
+              "id": 88,
+              "nodeType": "StructuredDocumentation",
+              "src": "2849:27:0",
+              "text": "@dev The vesting token."
+            },
+            "functionSelector": "fc0c546a",
+            "id": 93,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "token",
+            "nameLocation": "2890:5:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 89,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2895:2:0"
+            },
+            "returnParameters": {
+              "id": 92,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 91,
+                  "mutability": "mutable",
+                  "name": "token_",
+                  "nameLocation": "2924:6:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 93,
+                  "src": "2916:14:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 90,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2916:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2915:16:0"
+            },
+            "scope": 182,
+            "src": "2881:51:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 94,
+              "nodeType": "StructuredDocumentation",
+              "src": "2938:49:0",
+              "text": "@dev The total amount of tokens being vested."
+            },
+            "functionSelector": "62ecef42",
+            "id": 99,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "totalVestingsTokens",
+            "nameLocation": "3001:19:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 95,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3020:2:0"
+            },
+            "returnParameters": {
+              "id": 98,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 97,
+                  "mutability": "mutable",
+                  "name": "totalVestingsTokens_",
+                  "nameLocation": "3049:20:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 99,
+                  "src": "3041:28:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 96,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3041:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3040:30:0"
+            },
+            "scope": 182,
+            "src": "2992:79:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 100,
+              "nodeType": "StructuredDocumentation",
+              "src": "3077:134:0",
+              "text": " @dev   Returns the vesting schedule of a receiver.\n @param receiver_      The receiver of a vesting schedule."
+            },
+            "functionSelector": "7828f8a7",
+            "id": 117,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "vestingScheduleOf",
+            "nameLocation": "3225:17:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 103,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 102,
+                  "mutability": "mutable",
+                  "name": "receiver_",
+                  "nameLocation": "3251:9:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 117,
+                  "src": "3243:17:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 101,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3243:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3242:19:0"
+            },
+            "returnParameters": {
+              "id": 116,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 105,
+                  "mutability": "mutable",
+                  "name": "startTime_",
+                  "nameLocation": "3297:10:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 117,
+                  "src": "3289:18:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 104,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3289:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 107,
+                  "mutability": "mutable",
+                  "name": "cliff_",
+                  "nameLocation": "3325:6:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 117,
+                  "src": "3317:14:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 106,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3317:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 109,
+                  "mutability": "mutable",
+                  "name": "totalPeriods_",
+                  "nameLocation": "3349:13:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 117,
+                  "src": "3341:21:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 108,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3341:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 111,
+                  "mutability": "mutable",
+                  "name": "timePerPeriod_",
+                  "nameLocation": "3380:14:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 117,
+                  "src": "3372:22:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 110,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3372:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 113,
+                  "mutability": "mutable",
+                  "name": "totalTokens_",
+                  "nameLocation": "3412:12:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 117,
+                  "src": "3404:20:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 112,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3404:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 115,
+                  "mutability": "mutable",
+                  "name": "tokensClaimed_",
+                  "nameLocation": "3442:14:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 117,
+                  "src": "3434:22:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 114,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3434:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3279:183:0"
+            },
+            "scope": 182,
+            "src": "3216:247:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 118,
+              "nodeType": "StructuredDocumentation",
+              "src": "3469:210:0",
+              "text": " @dev   Set the vesting schedules for some receivers, respectively.\n @param receivers_ An array of receivers of vesting schedules.\n @param vestings_  An array of vesting schedules."
+            },
+            "functionSelector": "a52b2e82",
+            "id": 128,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "setVestingSchedules",
+            "nameLocation": "3693:19:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 126,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 121,
+                  "mutability": "mutable",
+                  "name": "receivers_",
+                  "nameLocation": "3732:10:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 128,
+                  "src": "3713:29:0",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_address_$dyn_calldata_ptr",
+                    "typeString": "address[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 119,
+                      "name": "address",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "3713:7:0",
+                      "stateMutability": "nonpayable",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "id": 120,
+                    "nodeType": "ArrayTypeName",
+                    "src": "3713:9:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                      "typeString": "address[]"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 125,
+                  "mutability": "mutable",
+                  "name": "vestings_",
+                  "nameLocation": "3771:9:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 128,
+                  "src": "3744:36:0",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_VestingSchedule_$87_calldata_ptr_$dyn_calldata_ptr",
+                    "typeString": "struct ITokenVesting.VestingSchedule[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 123,
+                      "nodeType": "UserDefinedTypeName",
+                      "pathNode": {
+                        "id": 122,
+                        "name": "VestingSchedule",
+                        "nameLocations": [
+                          "3744:15:0"
+                        ],
+                        "nodeType": "IdentifierPath",
+                        "referencedDeclaration": 87,
+                        "src": "3744:15:0"
+                      },
+                      "referencedDeclaration": 87,
+                      "src": "3744:15:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_VestingSchedule_$87_storage_ptr",
+                        "typeString": "struct ITokenVesting.VestingSchedule"
+                      }
+                    },
+                    "id": 124,
+                    "nodeType": "ArrayTypeName",
+                    "src": "3744:17:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_struct$_VestingSchedule_$87_storage_$dyn_storage_ptr",
+                      "typeString": "struct ITokenVesting.VestingSchedule[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3712:69:0"
+            },
+            "returnParameters": {
+              "id": 127,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3790:0:0"
+            },
+            "scope": 182,
+            "src": "3684:107:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 129,
+              "nodeType": "StructuredDocumentation",
+              "src": "3797:163:0",
+              "text": " @dev   Fund the contact with tokens that will be vested.\n @param totalTokens_ The amount of tokens that will be supplied to this contract."
+            },
+            "functionSelector": "73913545",
+            "id": 134,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "fundVesting",
+            "nameLocation": "3974:11:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 132,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 131,
+                  "mutability": "mutable",
+                  "name": "totalTokens_",
+                  "nameLocation": "3994:12:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 134,
+                  "src": "3986:20:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 130,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3986:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3985:22:0"
+            },
+            "returnParameters": {
+              "id": 133,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4016:0:0"
+            },
+            "scope": 182,
+            "src": "3965:52:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 135,
+              "nodeType": "StructuredDocumentation",
+              "src": "4023:184:0",
+              "text": " @dev   Change the receiver of an existing vesting schedule.\n @param oldReceiver_ The old receiver address.\n @param newReceiver_ The new receiver address."
+            },
+            "functionSelector": "4c69ec93",
+            "id": 142,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "changeReceiver",
+            "nameLocation": "4221:14:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 140,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 137,
+                  "mutability": "mutable",
+                  "name": "oldReceiver_",
+                  "nameLocation": "4244:12:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 142,
+                  "src": "4236:20:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 136,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4236:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 139,
+                  "mutability": "mutable",
+                  "name": "newReceiver_",
+                  "nameLocation": "4266:12:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 142,
+                  "src": "4258:20:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 138,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4258:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4235:44:0"
+            },
+            "returnParameters": {
+              "id": 141,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4288:0:0"
+            },
+            "scope": 182,
+            "src": "4212:77:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 143,
+              "nodeType": "StructuredDocumentation",
+              "src": "4295:221:0",
+              "text": " @dev    Returns the amount of claimable tokens for a receiver of a vesting schedule.\n @param  receiver_        The receiver address.\n @return claimableTokens_ The amount of claimable tokens."
+            },
+            "functionSelector": "84d24226",
+            "id": 150,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "claimableTokens",
+            "nameLocation": "4530:15:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 146,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 145,
+                  "mutability": "mutable",
+                  "name": "receiver_",
+                  "nameLocation": "4554:9:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 150,
+                  "src": "4546:17:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 144,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4546:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4545:19:0"
+            },
+            "returnParameters": {
+              "id": 149,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 148,
+                  "mutability": "mutable",
+                  "name": "claimableTokens_",
+                  "nameLocation": "4596:16:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 150,
+                  "src": "4588:24:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 147,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4588:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4587:26:0"
+            },
+            "scope": 182,
+            "src": "4521:93:0",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 151,
+              "nodeType": "StructuredDocumentation",
+              "src": "4620:136:0",
+              "text": " @dev   Claim the callers tokens of a vesting schedule.\n @param destination_ The destination to send the tokens."
+            },
+            "functionSelector": "df8de3e7",
+            "id": 156,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "claimTokens",
+            "nameLocation": "4770:11:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 154,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 153,
+                  "mutability": "mutable",
+                  "name": "destination_",
+                  "nameLocation": "4790:12:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 156,
+                  "src": "4782:20:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 152,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "4782:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "4781:22:0"
+            },
+            "returnParameters": {
+              "id": 155,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "4812:0:0"
+            },
+            "scope": 182,
+            "src": "4761:52:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 157,
+              "nodeType": "StructuredDocumentation",
+              "src": "4819:179:0",
+              "text": " @dev   Kill the vesting schedule for a receiver.\n @param receiver_    The receiver address.\n @param destination_ The destination to send the tokens."
+            },
+            "functionSelector": "53765858",
+            "id": 164,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "killVesting",
+            "nameLocation": "5012:11:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 162,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 159,
+                  "mutability": "mutable",
+                  "name": "receiver_",
+                  "nameLocation": "5032:9:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 164,
+                  "src": "5024:17:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 158,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5024:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 161,
+                  "mutability": "mutable",
+                  "name": "destination_",
+                  "nameLocation": "5051:12:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 164,
+                  "src": "5043:20:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 160,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5043:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5023:41:0"
+            },
+            "returnParameters": {
+              "id": 163,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5073:0:0"
+            },
+            "scope": 182,
+            "src": "5003:71:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "anonymous": false,
+            "documentation": {
+              "id": 165,
+              "nodeType": "StructuredDocumentation",
+              "src": "5165:264:0",
+              "text": " @dev   Is emitted when some ERC20 token is recovered from the contract.\n @param token       The address of the token.\n @param amount      The amount of token recovered.\n @param destination The destination the token was sent to."
+            },
+            "eventSelector": "06fbbb545a0f80e8f0fe29d731148729a130754066a48802b5999c11acdf52ce",
+            "id": 173,
+            "name": "RecoveredToken",
+            "nameLocation": "5440:14:0",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 172,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 167,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "token",
+                  "nameLocation": "5471:5:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 173,
+                  "src": "5455:21:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 166,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5455:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 169,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "5486:6:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 173,
+                  "src": "5478:14:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 168,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5478:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 171,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "destination",
+                  "nameLocation": "5510:11:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 173,
+                  "src": "5494:27:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 170,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5494:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5454:68:0"
+            },
+            "src": "5434:89:0"
+          },
+          {
+            "documentation": {
+              "id": 174,
+              "nodeType": "StructuredDocumentation",
+              "src": "5529:169:0",
+              "text": " @dev   Recover tokens owned by the contract.\n @param token_       The token address.\n @param destination_ The destination to send the ETH."
+            },
+            "functionSelector": "feaea586",
+            "id": 181,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "recoverToken",
+            "nameLocation": "5712:12:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 179,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 176,
+                  "mutability": "mutable",
+                  "name": "token_",
+                  "nameLocation": "5733:6:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 181,
+                  "src": "5725:14:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 175,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5725:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 178,
+                  "mutability": "mutable",
+                  "name": "destination_",
+                  "nameLocation": "5749:12:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 181,
+                  "src": "5741:20:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 177,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "5741:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "5724:38:0"
+            },
+            "returnParameters": {
+              "id": 180,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "5771:0:0"
+            },
+            "scope": 182,
+            "src": "5703:69:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 183,
+        "src": "65:5710:0",
+        "usedErrors": []
+      }
+    ],
+    "src": "39:5737:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.17+commit.8df45f5f.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.11",
+  "updatedAt": "2023-02-01T18:24:18.010Z",
+  "devdoc": {
+    "events": {
+      "ReceiverChanged(address,address)": {
+        "details": "Is emitted when the receiver of a token vesting schedule is changed.",
+        "params": {
+          "newReceiver": "The new receiver of the token vesting schedule.",
+          "oldReceiver": "The old receiver of the token vesting schedule."
+        }
+      },
+      "RecoveredToken(address,uint256,address)": {
+        "details": "Is emitted when some ERC20 token is recovered from the contract.",
+        "params": {
+          "amount": "The amount of token recovered.",
+          "destination": "The destination the token was sent to.",
+          "token": "The address of the token."
+        }
+      },
+      "TokensClaimed(address,uint256,address)": {
+        "details": "Is emitted when a receiver claims tokens from its vesting schedule.",
+        "params": {
+          "destination_": "The destination the claimed tokens have been sent to.",
+          "receiver_": "The receiver of a token vesting schedule.",
+          "tokensClaimed_": "The amount of tokens claimed."
+        }
+      },
+      "VestingFunded(uint256)": {
+        "details": "Is emitted when the contract is funded for vesting.",
+        "params": {
+          "totalTokens_": "The total amount of tokens to be vested."
+        }
+      },
+      "VestingKilled(address,uint256,address)": {
+        "details": "Is emitted when the token vesting schedule for a receiver is killed.",
+        "params": {
+          "destination_": "The destination the token have been sent to.",
+          "receiver_": "The receiver that had its token vesting schedule killed.",
+          "tokensClaimed_": "The amount of tokens claimed."
+        }
+      },
+      "VestingScheduleSet(address)": {
+        "details": "Is emitted when a token vesting schedule is set for a receiver.",
+        "params": {
+          "receiver_": "The receiver of a token vesting schedule."
+        }
+      }
+    },
+    "kind": "dev",
+    "methods": {
+      "acceptOwnership()": {
+        "details": "Takes ownership of the contract."
+      },
+      "changeReceiver(address,address)": {
+        "details": "Change the receiver of an existing vesting schedule.",
+        "params": {
+          "newReceiver_": "The new receiver address.",
+          "oldReceiver_": "The old receiver address."
+        }
+      },
+      "claimTokens(address)": {
+        "details": "Claim the callers tokens of a vesting schedule.",
+        "params": {
+          "destination_": "The destination to send the tokens."
+        }
+      },
+      "claimableTokens(address)": {
+        "details": "Returns the amount of claimable tokens for a receiver of a vesting schedule.",
+        "params": {
+          "receiver_": "The receiver address."
+        },
+        "returns": {
+          "claimableTokens_": "The amount of claimable tokens."
+        }
+      },
+      "fundVesting(uint256)": {
+        "details": "Fund the contact with tokens that will be vested.",
+        "params": {
+          "totalTokens_": "The amount of tokens that will be supplied to this contract."
+        }
+      },
+      "killVesting(address,address)": {
+        "details": "Kill the vesting schedule for a receiver.",
+        "params": {
+          "destination_": "The destination to send the tokens.",
+          "receiver_": "The receiver address."
+        }
+      },
+      "owner()": {
+        "details": "Returns the owner of the contract."
+      },
+      "pendingOwner()": {
+        "details": "Returns the pending owner of the contract."
+      },
+      "recoverToken(address,address)": {
+        "details": "Recover tokens owned by the contract.",
+        "params": {
+          "destination_": "The destination to send the ETH.",
+          "token_": "The token address."
+        }
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner, and clears the pendingOwner, if any."
+      },
+      "setVestingSchedules(address[],(uint256,uint256,uint256,uint256,uint256,uint256)[])": {
+        "details": "Set the vesting schedules for some receivers, respectively.",
+        "params": {
+          "receivers_": "An array of receivers of vesting schedules.",
+          "vestings_": "An array of vesting schedules."
+        }
+      },
+      "token()": {
+        "details": "The vesting token."
+      },
+      "totalVestingsTokens()": {
+        "details": "The total amount of tokens being vested."
+      },
+      "transferOwnership(address)": {
+        "details": "Allows a new account to take ownership of the contract."
+      },
+      "vestingScheduleOf(address)": {
+        "details": "Returns the vesting schedule of a receiver.",
+        "params": {
+          "receiver_": "The receiver of a vesting schedule."
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

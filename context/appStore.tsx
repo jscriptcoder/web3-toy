@@ -10,13 +10,11 @@ import {
 export interface State {
   address: string
   balance: string
-  contractBalance: string
 }
 
 const initialState: State = {
   address: '',
   balance: '',
-  contractBalance: '',
 }
 
 const noopDispatch: Dispatch<Partial<State>> = (value: Partial<State>) => {}
