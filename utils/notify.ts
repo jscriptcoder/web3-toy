@@ -1,8 +1,8 @@
 import { notification } from 'antd'
 
-export function notifyError(message: string, error: unknown): void {
+export function notifyError(message: string, error: any): void {
   notification.error({
     message,
-    description: error instanceof ErrorEvent ? error.message : `${error}`,
+    description: 'message' in error ? error.message : `${error}`,
   })
 }

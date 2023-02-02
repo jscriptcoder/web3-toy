@@ -1,8 +1,8 @@
 import { MenuOutlined } from '@ant-design/icons'
-import { Button, Dropdown } from 'antd'
+import { Button, Dropdown, message } from 'antd'
 import { useCallback, useMemo, useState } from 'react'
-import { useAppContext } from '../../context/appStore'
 import { notifyError } from '../../utils/notify'
+import { toLocalePrice } from '../../utils/numeral'
 import { claimTokens, getTotalVested } from '../../utils/web3'
 import Loading from '../Loading'
 
@@ -12,13 +12,16 @@ interface AccountMenuProps {
 
 export default function AccountMenu({ address }: AccountMenuProps) {
   const [querying, setQuerying] = useState(false)
+  const [messageApi, messageHolder] = message.useMessage()
 
   const onTotalVestingClick = useCallback(async () => {
     setQuerying(true)
 
     try {
       const totalVesting = await getTotalVested(address)
-      console.log(totalVesting)
+      messageApi.info(
+        `There is a total of ${toLocalePrice(totalVesting, 0)} vesting tokens`,
+      )
     } catch (err) {
       console.error(err)
       notifyError('Error getting total vesting tokens', err)
@@ -31,7 +34,8 @@ export default function AccountMenu({ address }: AccountMenuProps) {
     setQuerying(true)
 
     try {
-      await claimTokens(address)
+      const tx = await claimTokens(address)
+      console.log(tx)
     } catch (err) {
       console.error(err)
       notifyError('Error claiming tokens', err)
@@ -58,8 +62,9 @@ export default function AccountMenu({ address }: AccountMenuProps) {
 
   return (
     <div>
+      {messageHolder}
       <Dropdown
-        className="absolute top-2 right-2"
+        className="absolute top-3 right-3"
         menu={{ items }}
         placement="bottomRight"
       >
