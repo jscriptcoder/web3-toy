@@ -1,7 +1,7 @@
 import Web3 from 'web3'
 import type { Transaction } from 'web3-core'
 import tokenVestingJson from '../artifacts/TokenVesting.json'
-import emitter from './emitter'
+import { assert } from './check'
 
 // Network settings have more properties, but we're only interested in the `address`
 type NetworkSettings = Record<string, { address: Address }>
@@ -23,6 +23,8 @@ export async function requestAccounts(): Promise<Address[]> {
 }
 
 export async function getBalance(address: Address): Promise<Amount> {
+  assert(!address, '[getBalance] Missing "address" argument')
+
   const balanceWei = await web3.eth.getBalance(address)
   return web3.utils.fromWei(balanceWei)
 }
@@ -65,6 +67,8 @@ export async function getLatestTransactions(
   address: Address,
   howMany: number,
 ): Promise<Transaction[]> {
+  assert(!address, '[getLatestTransactions] Missing "address" argument')
+
   const activity: Transaction[] = []
   await gatherActivity(address, activity, 'latest', howMany)
 
@@ -72,17 +76,11 @@ export async function getLatestTransactions(
 }
 
 export async function getTotalVested(from: Address): Promise<Amount> {
-  if (from) {
-    return contract.methods.totalVestingsTokens().call({ from })
-  }
-
-  throw Error('[getTotalVested] Missing "from" argument')
+  assert(!from, '[getTotalVested] Missing "from" argument')
+  return contract.methods.totalVestingsTokens().call({ from })
 }
 
 export async function claimTokens(address: Address): Promise<void> {
-  if (address) {
-    return contract.methods.claimTokens(address).send({ from: address })
-  }
-
-  throw Error('[claimTokens] Missing "address" argument')
+  assert(!address, '[claimTokens] Missing "address" argument')
+  return contract.methods.claimTokens(address).send({ from: address })
 }

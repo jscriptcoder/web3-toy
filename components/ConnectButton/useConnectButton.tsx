@@ -1,7 +1,8 @@
-import { Modal, notification } from 'antd'
+import { message, Modal, notification } from 'antd'
 import { useCallback, useState } from 'react'
 import { useAppContext } from '../../context/appStore'
 import { getPrice } from '../../utils/api'
+import { notifyError } from '../../utils/notify'
 import { toLocalePrice } from '../../utils/numeral'
 import {
   getBalance,
@@ -21,14 +22,8 @@ function notifySuccessfulConnection(balance: string): void {
   })
 }
 
-function notifySomethingWentWrong(error: unknown): void {
-  notification.error({
-    message: 'Something went wrong',
-    description: `${error}`,
-  })
-}
-
 export default function useConnectButton() {
+  const [messageApi, messageHolder] = message.useMessage()
   const [connecting, setConnecting] = useState(false)
   const [appState, appDispatch] = useAppContext()
 
@@ -56,8 +51,7 @@ export default function useConnectButton() {
         notifySuccessfulConnection(balance)
       } catch (err) {
         console.error(err)
-
-        notifySomethingWentWrong(err)
+        notifyError('Error connecting', err)
       } finally {
         setConnecting(false)
       }
@@ -65,17 +59,13 @@ export default function useConnectButton() {
   }, [appState.address])
 
   const clickDisconnect = useCallback(async () => {
-    Modal.info({
-      content: 'Not yet implemented',
-      footer: null,
-      closable: true,
-      maskClosable: true,
-    })
+    messageApi.warning('Not yet implemented')
   }, [])
 
   return {
     appState,
     connecting,
+    messageHolder,
     clickConnect,
     clickDisconnect,
   }

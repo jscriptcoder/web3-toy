@@ -15,7 +15,7 @@ export default function Content() {
     <Layout.Content>
       <div className="bg-[url('/ethereum-bg6.png')] h-full bg-cover flex gap-12 justify-center p-12">
         <div className="glass-box w-[400px] overflow-auto">
-          {isConnected && <AccountMenu />}
+          {isConnected && <AccountMenu address={address} />}
 
           <AccountPane address={address} isConnected={isConnected} />
 

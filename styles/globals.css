@@ -10,28 +10,6 @@
   }
 }
 
-@layer components {
-  .input {
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 4px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(7px);
-    -webkit-backdrop-filter: blur(7px);
-    border: 1px solid rgba(255, 255, 255, 1);
-  }
-
-  .button {
-    background: rgba(0, 21, 41, 0.6);
-    border-radius: 4px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border: 2px solid rgba(0, 21, 41, 0.3);
-
-    @apply transition-colors hover:bg-[#001529]/[.8];
-  }
-}
-
 @layer utilities {
   .glass-box {
     background: rgba(0, 0, 0, 0.3);
@@ -42,6 +20,6 @@
   }
 
   .text-shadow {
-    text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.6);
+    text-shadow: 1px 1px 6px rgba(255, 255, 255, 0.4);
   }
 }
