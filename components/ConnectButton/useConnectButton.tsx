@@ -1,6 +1,8 @@
 import { Modal, notification } from 'antd'
 import { useCallback, useState } from 'react'
 import { useAppContext } from '../../context/appStore'
+import { getPrice } from '../../utils/api'
+import { toLocalePrice } from '../../utils/numeral'
 import {
   getBalance,
   getLatestTransactions,
@@ -40,9 +42,16 @@ export default function useConnectButton() {
 
         // Then we gather information to add to our global state
         const balance = await getBalance(address)
+        const data = await getPrice('ethereum', 'usd')
+
+        if ('error' in data) {
+          throw Error(data.error)
+        }
+
+        const balanceUSD = toLocalePrice(parseFloat(balance) * data.price)
         const activity = await getLatestTransactions(address, 5)
 
-        appDispatch({ address, balance, activity })
+        appDispatch({ address, balance, balanceUSD, activity })
 
         notifySuccessfulConnection(balance)
       } catch (err) {

@@ -1,69 +1,32 @@
-import Image from 'next/image'
-import { Avatar, Divider, Layout, List, Popover, Tabs, Typography } from 'antd'
-import useContent, { getListItemMeta } from './useContent'
-import { truncateAddress } from '../../utils/strings'
-
-const { Title, Text } = Typography
+import { useMemo } from 'react'
+import { Divider, Layout } from 'antd'
+import AmountPane from './AmountPane'
+import ActivityPane from './ActivityPane'
+import AccountPane from './AccountPane'
+import AccountMenu from './AccountMenu'
+import { useAppContext } from '../../context/appStore'
 
 export default function Content() {
-  const { loading, appState, isConnected } = useContent()
+  const [appState] = useAppContext()
   const { address, balance, balanceUSD, activity } = appState
+  const isConnected = useMemo(() => Boolean(address), [address])
 
   return (
     <Layout.Content>
       <div className="bg-[url('/ethereum-bg6.png')] h-full bg-cover flex gap-12 justify-center p-12">
         <div className="glass-box w-[400px] overflow-auto">
-          <div className="p-4 text-center">
-            <Title level={2} className="text-shadow">
-              Account
-            </Title>
-            <Popover placement="bottom" content={address}>
-              <Text>{truncateAddress(address, 12)}</Text>
-            </Popover>
-          </div>
+          {isConnected && <AccountMenu />}
 
-          <Divider />
-          <div className="flex flex-col items-center">
-            <Image
-              alt="Ethereum logo"
-              src="/ethereum-diamond-logo.svg"
-              width={32}
-              height={0}
-            />
-            <Title level={2} className="text-shadow">
-              {balance} <small>ETH</small>
-            </Title>
-            <Text>{balanceUSD} USD</Text>
-          </div>
-          <Divider />
-          <div className="p-4">
-            <Tabs
-              size="large"
-              defaultActiveKey="1"
-              type="card"
-              items={[
-                {
-                  key: 'activity',
-                  label: 'Activity',
-                  children: (
-                    <List>
-                      {activity.map((tx) => (
-                        <List.Item key={tx.blockHash}>
-                          <List.Item.Meta {...getListItemMeta(address, tx)} />
-                        </List.Item>
-                      ))}
-                    </List>
-                  ),
-                },
-                {
-                  key: 'assets',
-                  label: 'Assets',
-                  children: 'Assets',
-                  disabled: true,
-                },
-              ]}
-            />
-          </div>
+          <AccountPane address={address} isConnected={isConnected} />
+
+          {isConnected && (
+            <>
+              <Divider />
+              <AmountPane balance={balance} balanceUSD={balanceUSD} />
+              <Divider />
+              <ActivityPane address={address} activity={activity} />
+            </>
+          )}
         </div>
       </div>
     </Layout.Content>
