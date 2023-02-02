@@ -5,7 +5,7 @@
   "scripts": {
     "generate-types": "typechain --target=truffle-v5 'build/contracts/*.json'",
     "tsc-migrate": "tsc -p ./tsconfig.migrate.json --outDir ./migrations",
-    "contracts-json": "cp ./build/contracts/*.json ./utils/contracts",
+    "contracts-json": "mkdir -p ./artifacts && cp ./build/contracts/*.json ./artifacts",
     "premigrate": "npm run tsc-migrate",
     "migrate": "truffle migrate",
     "postmigrate": "npm run contracts-json",

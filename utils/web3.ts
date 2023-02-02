@@ -1,13 +1,21 @@
 import Web3 from 'web3'
 import { EventData } from 'web3-eth-contract'
-import { contractAddress, contractAbi } from '../config'
+import tokenVestingJson from '../artifacts/TokenVesting.json'
 import emitter from './emitter'
 
 type Address = string
 type Amount = string // amounts are always presented as strings
 
+// Network settings have more properties, but we're only interested in the `address`
+type NetworkSettings = Record<string, { address: Address }>
+
 const projectUrl = process.env['NEXT_PUBLIC_PROJECT_URL']
 const networkId = process.env['NEXT_PUBLIC_NETWORK_ID']
+
+const networkSettings = tokenVestingJson.networks as NetworkSettings
+
+const contractAbi = tokenVestingJson.abi as unknown as AbiItem
+const contractAddress = networkSettings[networkId ?? 5777].address as Address
 
 export const web3 = new Web3(Web3.givenProvider ?? projectUrl)
 
@@ -35,7 +43,7 @@ export async function getTotalVested(from: Address): Promise<Amount> {
     return contract.methods.totalVestingsTokens().call({ from })
   }
 
-  throw Error('[getTotalVested] Missing address making the call')
+  throw Error('[getTotalVested] Missing "from" argument')
 }
 
 export async function claimTokens(address: Address): Promise<void> {
@@ -43,5 +51,5 @@ export async function claimTokens(address: Address): Promise<void> {
     return contract.methods.claimTokens(address).send({ from: address })
   }
 
-  throw Error('[getTotalVested] Missing address making the call')
+  throw Error('[claimTokens] Missing "address" argument')
 }
