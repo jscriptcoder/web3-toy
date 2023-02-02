@@ -1,7 +1,11 @@
 import { Modal, notification } from 'antd'
 import { useCallback, useState } from 'react'
 import { useAppContext } from '../../context/appStore'
-import { getBalance, requestAccounts } from '../../utils/web3'
+import {
+  getBalance,
+  getLatestTransactions,
+  requestAccounts,
+} from '../../utils/web3'
 
 function notifySuccessfulConnection(balance: string): void {
   notification.success({
@@ -32,13 +36,13 @@ export default function useConnectButton() {
 
       try {
         // This will prompt the user for wallet connection
-        const accounts = await requestAccounts()
+        const [address] = await requestAccounts()
 
         // Then we gather information to add to our global state
-        const address = accounts[0]
         const balance = await getBalance(address)
+        const activity = await getLatestTransactions(address, 5)
 
-        appDispatch({ address, balance })
+        appDispatch({ address, balance, activity })
 
         notifySuccessfulConnection(balance)
       } catch (err) {

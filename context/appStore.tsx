@@ -6,15 +6,20 @@ import {
   Context,
   useReducer,
 } from 'react'
+import type { Transaction } from 'web3-core'
 
 export interface State {
-  address: string
-  balance: string
+  address: Address
+  balance: Amount
+  balanceUSD: Amount
+  activity: Transaction[]
 }
 
 const initialState: State = {
   address: '',
   balance: '',
+  balanceUSD: '',
+  activity: [],
 }
 
 const noopDispatch: Dispatch<Partial<State>> = (value: Partial<State>) => {}

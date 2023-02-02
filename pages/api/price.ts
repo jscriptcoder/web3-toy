@@ -10,9 +10,6 @@ type DataFromCoinGecko = {
   [id: string]: { [fiat: string]: number }
 }
 
-type PriceData = { price: number }
-type ErrorData = { error: string }
-
 const COINGECKO_API = 'https://api.coingecko.com/api/v3'
 
 export default async function getPrice(

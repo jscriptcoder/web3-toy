@@ -1,3 +1,3 @@
-export function toPrice(num: number | string, decimals = 2): string {
-  return Number(num).toFixed(decimals)
+export function toLocalePrice(num: number | string, decimals = 2): string {
+  return Number(Number(num).toFixed(decimals)).toLocaleString()
 }

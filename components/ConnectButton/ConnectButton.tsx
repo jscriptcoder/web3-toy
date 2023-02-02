@@ -12,24 +12,26 @@ export default function ConnectButton({ label }: ConnectButtonProps) {
   const { appState, connecting, clickConnect, clickDisconnect } =
     useConnectButton()
 
+  const { address, balance } = appState
+
   // If we have address means the user is connected.
   // We'll had a small popover displaying some more
   // details of that address, plus a disconnect button.
-  const ButtonContent = appState.address ? (
+  const ButtonContent = address ? (
     <Popover
       placement="bottom"
       content={
         <div>
           <div className="flex flex-col">
             <strong>Wallet address:</strong>
-            <span className="text-xs">{appState.address}</span>
+            <span className="text-xs">{address}</span>
           </div>
 
           <Divider className="my-2" />
 
           <div className="flex space-x-1 items-center">
             <strong>Balance:</strong>
-            <span className="text-xs">{appState.balance} ETH</span>
+            <span className="text-xs">{balance} ETH</span>
           </div>
 
           <Divider className="my-2" />
@@ -50,7 +52,7 @@ export default function ConnectButton({ label }: ConnectButtonProps) {
       <span className="w-full space-x-2 flex items-center">
         <CheckCircleFilled />
         <strong>Connected to: </strong>
-        <span>{truncateAddress(appState.address, 12)}</span>
+        <span>{truncateAddress(appState.address, 6)}</span>
       </span>
     </Popover>
   ) : (

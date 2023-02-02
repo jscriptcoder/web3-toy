@@ -34,31 +34,14 @@
 
 @layer utilities {
   .glass-box {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    backdrop-filter: blur(20px);
     border: 2px solid rgba(255, 255, 255, 0.3);
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
-
-    @apply w-full p-8 flex flex-col items-center;
+    box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.6);
   }
 
   .text-shadow {
-    text-shadow: 4px 4px 2px rgba(0, 0, 0, 0.6);
-  }
-
-  .text-neon {
-    text-shadow: 0 0 5px #fff, 0 0 5px #fff, 0 0 5px #fff, 0 0 20px #fe6839,
-      0 0 30px #fe6839, 0 0 40px #fe6839, 0 0 50px #fe6839, 0 0 60px #fe6839;
-
-    @apply text-[#FFF]/[.85];
-  }
-
-  .text-redish-shadow {
-    text-shadow: 2px 2px 5px #fe6839;
+    text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.6);
   }
 }

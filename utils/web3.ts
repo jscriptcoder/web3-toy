@@ -1,10 +1,7 @@
 import Web3 from 'web3'
-import { EventData } from 'web3-eth-contract'
+import type { Transaction } from 'web3-core'
 import tokenVestingJson from '../artifacts/TokenVesting.json'
 import emitter from './emitter'
-
-type Address = string
-type Amount = string // amounts are always presented as strings
 
 // Network settings have more properties, but we're only interested in the `address`
 type NetworkSettings = Record<string, { address: Address }>
@@ -21,21 +18,57 @@ export const web3 = new Web3(Web3.givenProvider ?? projectUrl)
 
 export const contract = new web3.eth.Contract(contractAbi, contractAddress)
 
-/**
- * This function will prompt the user for permission to connect their wallet
- * @returns list of connected wallet's accounts
- */
 export async function requestAccounts(): Promise<Address[]> {
   return web3.eth.requestAccounts()
 }
 
-/**
- * @param address we want to get the balance from
- * @returns the amount in that address
- */
 export async function getBalance(address: Address): Promise<Amount> {
   const balanceWei = await web3.eth.getBalance(address)
   return web3.utils.fromWei(balanceWei)
+}
+
+async function gatherActivity(
+  address: string,
+  activity: Transaction[],
+  blockHash = 'latest',
+  limit = 5,
+): Promise<void> {
+  // Exit condition
+  if (
+    activity.length === limit ||
+    (blockHash !== 'latest' && !Number(blockHash))
+  ) {
+    return
+  }
+
+  const block = await web3.eth.getBlock(blockHash)
+
+  const { parentHash, transactions } = block
+
+  const promises = transactions.map((transactionHash) =>
+    web3.eth.getTransaction(transactionHash),
+  )
+  const txs = await Promise.all(promises)
+
+  // Gather any transaction where the address was involved
+  txs.forEach((tx) => {
+    const { from, to } = tx
+    if (from === address || to === address) {
+      activity.push(tx)
+    }
+  })
+
+  return gatherActivity(address, activity, parentHash, limit)
+}
+
+export async function getLatestTransactions(
+  address: Address,
+  howMany: number,
+): Promise<Transaction[]> {
+  const activity: Transaction[] = []
+  await gatherActivity(address, activity, 'latest', howMany)
+
+  return activity
 }
 
 export async function getTotalVested(from: Address): Promise<Amount> {
