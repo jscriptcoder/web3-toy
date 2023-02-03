@@ -1,5 +1,5 @@
 import { MenuOutlined } from '@ant-design/icons'
-import { Button, Dropdown, message, notification } from 'antd'
+import { Button, Dropdown, type MenuProps, message, notification } from 'antd'
 import { useCallback, useMemo, useState } from 'react'
 import type { Transaction } from 'web3-core'
 import { notifyError } from '../../utils/notify'
@@ -20,21 +20,21 @@ function notifySuccessTransaction(tx: Transaction): void {
 
 export default function AccountMenu({ address }: AccountMenuProps) {
   const [querying, setQuerying] = useState(false)
-  const [messageApi, messageHolder] = message.useMessage()
 
   const onTotalVestingClick = useCallback(async () => {
-    setQuerying(true)
+    // setQuerying(true)
 
     try {
       const totalVesting = await getTotalVesting(address)
-      messageApi.info(
+      message.info(
         `There is a total of ${toLocalePrice(totalVesting, 0)} vesting tokens`,
+        5, // duration of the message
       )
     } catch (err) {
       console.error('[onTotalVestingClick] Error:', err)
       notifyError('Error getting total vesting tokens', err)
     } finally {
-      setQuerying(false)
+      // setQuerying(false)
     }
   }, [])
 
@@ -51,7 +51,7 @@ export default function AccountMenu({ address }: AccountMenuProps) {
     }
   }, [])
 
-  const items = useMemo(
+  const items: MenuProps['items'] = useMemo(
     () => [
       {
         key: 'vesting',
@@ -69,7 +69,6 @@ export default function AccountMenu({ address }: AccountMenuProps) {
 
   return (
     <div>
-      {messageHolder}
       <Dropdown
         className="absolute top-3 right-3"
         menu={{ items }}
