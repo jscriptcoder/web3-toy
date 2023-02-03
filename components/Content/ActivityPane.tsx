@@ -1,31 +1,73 @@
-import { SelectOutlined, UploadOutlined } from '@ant-design/icons'
+import {
+  CloseCircleOutlined,
+  SelectOutlined,
+  UploadOutlined,
+} from '@ant-design/icons'
 import { List, Tabs } from 'antd'
 import { useMemo } from 'react'
 import type { Transaction } from 'web3-core'
+import { truncateAddress } from '../../utils/strings'
+import { toEther } from '../../utils/web3'
 
 interface ActivityPaneProps {
   address: Address
   activity: Transaction[]
+  receipts: TransactionReceipt[]
 }
 
-function getListItemMeta(address: Address, tx: Transaction) {
-  return address === tx.from
+interface MetaTitleProps {
+  title: string
+  amount: string
+}
+
+const ItemMetaTitle = ({ title, amount }: MetaTitleProps): JSX.Element => (
+  <div className="flex justify-between">
+    <span>{title}</span>
+    <span className="text-right">{amount}</span>
+  </div>
+)
+
+function getListItemMeta(
+  address: Address,
+  tx: Transaction,
+  receipt: TransactionReceipt,
+) {
+  const amountEth = `${toEther(tx.value)} ETH`
+  const addressFrom =
+    address.toLocaleLowerCase() === tx.from.toLocaleLowerCase()
+  const succeeded = receipt.status
+
+  return addressFrom
     ? {
-        avatar: <UploadOutlined />,
-        title: `Sent to`,
-        description: <small>{tx.to}</small>,
+        avatar: succeeded ? <UploadOutlined /> : <CloseCircleOutlined />,
+        title: (
+          <ItemMetaTitle
+            title={succeeded ? 'Sent' : 'Failed'}
+            amount={amountEth}
+          />
+        ),
+        description: <small className="text-xs">{tx.to}</small>,
       }
     : {
-        avatar: <SelectOutlined />,
-        title: `Received from`,
-        description: <small>{tx.from}</small>,
+        avatar: succeeded ? <SelectOutlined /> : <CloseCircleOutlined />,
+        title: (
+          <ItemMetaTitle
+            title={succeeded ? 'Received' : 'Failed'}
+            amount={amountEth}
+          />
+        ),
+        description: <small className="text-xs">{tx.from}</small>,
       }
 }
 
 const { Item } = List
 const { Meta } = Item
 
-export default function ActivityPane({ address, activity }: ActivityPaneProps) {
+export default function ActivityPane({
+  address,
+  activity,
+  receipts,
+}: ActivityPaneProps) {
   const items = useMemo(
     () => [
       {
@@ -33,9 +75,9 @@ export default function ActivityPane({ address, activity }: ActivityPaneProps) {
         label: 'Activity',
         children: (
           <List>
-            {activity.map((tx) => (
+            {activity.map((tx, i) => (
               <Item key={tx.blockHash}>
-                <Meta {...getListItemMeta(address, tx)} />
+                <Meta {...getListItemMeta(address, tx, receipts[i])} />
               </Item>
             ))}
           </List>

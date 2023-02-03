@@ -51,19 +51,20 @@ export default function useConnectButton() {
         }
 
         const balanceUSD = toLocalePrice(parseFloat(balance) * data.price)
-        const activity = await getLatestTransactions(address, 5)
+        const { activity, receipts } = await getLatestTransactions(address, 5)
 
         appDispatch({
           address,
           balance,
           balanceUSD,
           activity,
+          receipts,
           isConnected: true,
         })
 
         notifySuccessfulConnection(balance)
       } catch (err) {
-        console.error(err)
+        console.error('[onConnectClick] Error:', err)
         notifyError('Error connecting', err)
       } finally {
         setConnecting(false)

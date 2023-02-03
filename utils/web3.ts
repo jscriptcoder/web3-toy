@@ -5,7 +5,7 @@
  */
 
 import Web3 from 'web3'
-import type { Transaction } from 'web3-core'
+import type { Transaction, TransactionReceipt } from 'web3-core'
 import tokenVestingJson from '../artifacts/TokenVesting.json'
 import { assert } from './check'
 
@@ -22,6 +22,8 @@ const networkSettings = tokenVestingJson.networks as NetworkSettings
 const contractAbi = tokenVestingJson.abi as unknown as AbiItem
 const contractAddress = networkSettings[networkId ?? 5777].address as Address
 
+console.log('[web3.ts] Contract address:', contractAddress)
+
 export const web3 = new Web3(Web3.givenProvider ?? projectUrl)
 
 // Will help us to interact with the contract
@@ -32,19 +34,24 @@ export const contract = new web3.eth.Contract(contractAbi, contractAddress)
  * @returns List of connected wallet's accounts
  */
 export async function requestAccounts(): Promise<Address[]> {
-  return web3.eth.requestAccounts()
+  const accounts = await web3.eth.requestAccounts()
+  console.log('[requestAccounts] Accounts:', accounts)
+  return accounts
 }
 
 /**
  * Gets the balance of an account
  * @param address Address we want to get the balance from
- * @returns The amount held in that address
+ * @returns The amount held in that address in Ether
  */
 export async function getBalance(address: Address): Promise<Amount> {
   assert(!address, '[getBalance] Missing "address" argument')
 
   const balanceWei = await web3.eth.getBalance(address)
-  return web3.utils.fromWei(balanceWei)
+  const balance = web3.utils.fromWei(balanceWei)
+  console.log(`[getBalance] Balance: ${balance} ETH`)
+
+  return balance
 }
 
 /**
@@ -81,7 +88,10 @@ async function gatherActivity(
   // this means any transaction from or to
   txs.forEach((tx) => {
     const { from, to } = tx
-    if (from === address || to === address) {
+    if (
+      from.toLocaleLowerCase() === address.toLocaleLowerCase() ||
+      to?.toLocaleLowerCase() === address.toLocaleLowerCase()
+    ) {
       activity.push(tx)
     }
   })
@@ -93,18 +103,27 @@ async function gatherActivity(
  * Gathers the activity of an account
  * @param address
  * @param howMany Amount to transactions we want to return
- * @returns The latest transactions
+ * @returns The latest transactions and their receipts
  */
 export async function getLatestTransactions(
   address: Address,
   howMany: number,
-): Promise<Transaction[]> {
+): Promise<{ activity: Transaction[]; receipts: TransactionReceipt[] }> {
   assert(!address, '[getLatestTransactions] Missing "address" argument')
 
   const activity: Transaction[] = []
   await gatherActivity(address, activity, 'latest', howMany)
 
-  return activity
+  console.log('[getLatestTransactions] Activity:', activity)
+
+  // Following we're gonna get the transaction receipt
+  // in order to see the status
+  const promises = activity.map((tx) => web3.eth.getTransactionReceipt(tx.hash))
+  const receipts = await Promise.all(promises)
+
+  console.log('[getLatestTransactions] Receipts:', receipts)
+
+  return { activity, receipts }
 }
 
 /**
@@ -114,7 +133,11 @@ export async function getLatestTransactions(
  */
 export async function getTotalVesting(from: Address): Promise<Amount> {
   assert(!from, '[getTotalVesting] Missing "from" argument')
-  return contract.methods.totalVestingsTokens().call({ from })
+
+  const total = await contract.methods.totalVestingsTokens().call({ from })
+  console.log('[getTotalVesting] Total vesting tokens:', total)
+
+  return total
 }
 
 /**
@@ -124,5 +147,18 @@ export async function getTotalVesting(from: Address): Promise<Amount> {
  */
 export async function claimTokens(address: Address): Promise<void> {
   assert(!address, '[claimTokens] Missing "address" argument')
-  return contract.methods.claimTokens(address).send({ from: address })
+
+  const tx = await contract.methods.claimTokens(address).send({ from: address })
+  console.log('[claimTokens] Transaction:', tx)
+
+  return tx
+}
+
+/**
+ * Converts wei to ether
+ * @param amount in wei units
+ * @returns Amount in ether units
+ */
+export function toEther(amount: Amount): Amount {
+  return web3.utils.fromWei(amount.toString())
 }

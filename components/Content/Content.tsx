@@ -8,7 +8,8 @@ import { useAppContext } from '../../context/appStore'
 
 export default function Content() {
   const [appState] = useAppContext()
-  const { address, balance, balanceUSD, activity, isConnected } = appState
+  const { address, balance, balanceUSD, isConnected, activity, receipts } =
+    appState
 
   return (
     <Layout.Content>
@@ -26,7 +27,11 @@ export default function Content() {
               <Divider />
               <AmountPane balance={balance} balanceUSD={balanceUSD} />
               <Divider />
-              <ActivityPane address={address} activity={activity} />
+              <ActivityPane
+                address={address}
+                activity={activity}
+                receipts={receipts}
+              />
             </>
           )}
         </div>

@@ -23,7 +23,7 @@ export default function AccountMenu({ address }: AccountMenuProps) {
         `There is a total of ${toLocalePrice(totalVesting, 0)} vesting tokens`,
       )
     } catch (err) {
-      console.error(err)
+      console.error('[onTotalVestingClick] Error:', err)
       notifyError('Error getting total vesting tokens', err)
     } finally {
       setQuerying(false)
@@ -38,7 +38,7 @@ export default function AccountMenu({ address }: AccountMenuProps) {
       // TODO
       console.log(tx)
     } catch (err) {
-      console.error(err)
+      console.error('[onClaimTokensClick] Error:', err)
       notifyError('Error claiming tokens', err)
     } finally {
       setQuerying(false)

@@ -17,16 +17,18 @@ export interface State {
   address: Address
   balance: Amount
   balanceUSD: Amount
-  activity: Transaction[]
   isConnected: boolean
+  activity: Transaction[]
+  receipts: TransactionReceipt[]
 }
 
 const initialState: State = {
   address: '',
   balance: '',
   balanceUSD: '',
-  activity: [],
   isConnected: false,
+  activity: [],
+  receipts: [],
 }
 
 const noopDispatch: Dispatch<Partial<State>> = (value: Partial<State>) => {}
@@ -40,10 +42,16 @@ export const AppContext: Context<[State, Dispatch<Partial<State>>]> =
  */
 function reducer(prevState: State, partialState: Partial<State>): State {
   if (partialState) {
-    return {
+    console.log('[appStore/reducer] Previous state:', prevState)
+
+    const newState = {
       ...prevState,
       ...partialState,
     }
+
+    console.log('[appStore/reducer] New state:', newState)
+
+    return newState
   }
 
   return prevState

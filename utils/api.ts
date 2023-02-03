@@ -13,8 +13,12 @@ export async function getPrice(
     encodeURIComponent(fiat),
   ]
 
+  console.log(`[getPrice] Querying price for "${id}" in "${fiat}"`)
+
   const response = await fetch(`/api/price?id=${encodedId}&fiat=${encodedFiat}`)
   const data: ResponseData = await response.json()
+
+  console.log(`[getPrice] Response ${response.status} with data:`, data)
 
   return data
 }
