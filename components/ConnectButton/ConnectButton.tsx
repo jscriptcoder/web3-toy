@@ -9,8 +9,13 @@ interface ConnectButtonProps {
 }
 
 export default function ConnectButton({ label }: ConnectButtonProps) {
-  const { appState, connecting, messageHolder, clickConnect, clickDisconnect } =
-    useConnectButton()
+  const {
+    appState,
+    connecting,
+    messageHolder,
+    onConnectClick,
+    onDisconnectClick,
+  } = useConnectButton()
 
   const { address, balance } = appState
 
@@ -40,7 +45,7 @@ export default function ConnectButton({ label }: ConnectButtonProps) {
             <Button
               className="flex items-center"
               type="dashed"
-              onClick={clickDisconnect}
+              onClick={onDisconnectClick}
             >
               <span>Disconnect</span>
               <LogoutOutlined />
@@ -52,7 +57,7 @@ export default function ConnectButton({ label }: ConnectButtonProps) {
       <span className="w-full space-x-2 flex items-center">
         <CheckCircleFilled />
         <strong>Connected to: </strong>
-        <span>{truncateAddress(appState.address, 6)}</span>
+        <span>{truncateAddress(address, 6)}</span>
       </span>
     </Popover>
   ) : (
@@ -62,7 +67,7 @@ export default function ConnectButton({ label }: ConnectButtonProps) {
   return (
     <div className="ConnectButton">
       {messageHolder}
-      <Button onClick={clickConnect}>{ButtonContent}</Button>
+      <Button onClick={onConnectClick}>{ButtonContent}</Button>
       <Loading
         show={connecting}
         title="Connecting to a wallet..."

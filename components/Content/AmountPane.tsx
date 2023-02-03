@@ -6,6 +6,8 @@ interface AmountPaneProps {
   balanceUSD: Amount
 }
 
+const { Title, Text } = Typography
+
 export default function AmountPane({ balance, balanceUSD }: AmountPaneProps) {
   return (
     <div className="flex flex-col items-center p-4">
@@ -15,12 +17,12 @@ export default function AmountPane({ balance, balanceUSD }: AmountPaneProps) {
         width={32}
         height={0}
       />
-      <Typography.Title level={2} className="text-shadow">
+      <Title level={2} className="text-shadow">
         {balance} <small>ETH</small>
-      </Typography.Title>
-      <Typography.Text>
+      </Title>
+      <Text>
         {balanceUSD} <small>USD</small>
-      </Typography.Text>
+      </Text>
     </div>
   )
 }

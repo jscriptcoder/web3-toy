@@ -3,7 +3,7 @@ import { Button, Dropdown, message } from 'antd'
 import { useCallback, useMemo, useState } from 'react'
 import { notifyError } from '../../utils/notify'
 import { toLocalePrice } from '../../utils/numeral'
-import { claimTokens, getTotalVested } from '../../utils/web3'
+import { claimTokens, getTotalVesting } from '../../utils/web3'
 import Loading from '../Loading'
 
 interface AccountMenuProps {
@@ -18,7 +18,7 @@ export default function AccountMenu({ address }: AccountMenuProps) {
     setQuerying(true)
 
     try {
-      const totalVesting = await getTotalVested(address)
+      const totalVesting = await getTotalVesting(address)
       messageApi.info(
         `There is a total of ${toLocalePrice(totalVesting, 0)} vesting tokens`,
       )
@@ -35,6 +35,7 @@ export default function AccountMenu({ address }: AccountMenuProps) {
 
     try {
       const tx = await claimTokens(address)
+      // TODO
       console.log(tx)
     } catch (err) {
       console.error(err)

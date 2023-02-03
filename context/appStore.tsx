@@ -1,3 +1,8 @@
+/**
+ * For this small application I'm gonna be using Context API
+ * and the help of useReducer to manage the state
+ */
+
 import {
   createContext,
   PropsWithChildren,
@@ -13,6 +18,7 @@ export interface State {
   balance: Amount
   balanceUSD: Amount
   activity: Transaction[]
+  isConnected: boolean
 }
 
 const initialState: State = {
@@ -20,6 +26,7 @@ const initialState: State = {
   balance: '',
   balanceUSD: '',
   activity: [],
+  isConnected: false,
 }
 
 const noopDispatch: Dispatch<Partial<State>> = (value: Partial<State>) => {}
@@ -27,6 +34,10 @@ const noopDispatch: Dispatch<Partial<State>> = (value: Partial<State>) => {}
 export const AppContext: Context<[State, Dispatch<Partial<State>>]> =
   createContext([initialState, noopDispatch])
 
+/**
+ * Nothing fancy on this reducer. It simply creates a new object
+ * every time we change any state property
+ */
 function reducer(prevState: State, partialState: Partial<State>): State {
   if (partialState) {
     return {

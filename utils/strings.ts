@@ -1,3 +1,10 @@
+/**
+ * Truncates an address inserting ellipsis in the middle
+ * @param address
+ * @param startLength How many chars to show before the ellipsis
+ * @param endLength How many chars to show after the ellipsis
+ * @returns Truncated address
+ */
 export function truncateAddress(
   address: string,
   startLength = 6,

@@ -1,4 +1,4 @@
-const { web3, getContract } = require('./web3')
+const { web3, getContract } = require('./web3-helper')
 const tokenVestingJson = require('../artifacts/TokenVesting.json')
 
 const contract = getContract(tokenVestingJson)

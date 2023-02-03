@@ -12,6 +12,11 @@ type DataFromCoinGecko = {
 
 const COINGECKO_API = 'https://api.coingecko.com/api/v3'
 
+/**
+ * This endpoint will communicate with CoinGecko API to get
+ * the price of a coin or token in a given fiat currency.
+ * Also helps with CORs, serving as a proxy for the Frontend.
+ */
 export default async function getPrice(
   req: NextApiRequest,
   res: NextApiResponse<PriceData | ErrorData>,

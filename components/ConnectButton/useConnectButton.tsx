@@ -1,4 +1,4 @@
-import { message, Modal, notification } from 'antd'
+import { message, notification } from 'antd'
 import { useCallback, useState } from 'react'
 import { useAppContext } from '../../context/appStore'
 import { getPrice } from '../../utils/api'
@@ -10,7 +10,11 @@ import {
   requestAccounts,
 } from '../../utils/web3'
 
-function notifySuccessfulConnection(balance: string): void {
+/**
+ * Helper function to notify the user of successful connection
+ * showing the current balanace
+ */
+function notifySuccessfulConnection(balance: Amount): void {
   notification.success({
     message: 'Successful connection.',
     description: (
@@ -27,26 +31,35 @@ export default function useConnectButton() {
   const [connecting, setConnecting] = useState(false)
   const [appState, appDispatch] = useAppContext()
 
-  const clickConnect = useCallback(async () => {
-    if (!appState.address) {
+  const { isConnected } = appState
+
+  const onConnectClick = useCallback(async () => {
+    if (!isConnected) {
       setConnecting(true)
 
       try {
-        // This will prompt the user for wallet connection
+        // This will prompt the user for wallet connection...
         const [address] = await requestAccounts()
 
-        // Then we gather information to add to our global state
+        // ... then we gather information to add to our global state
         const balance = await getBalance(address)
         const data = await getPrice('ethereum', 'usd')
 
         if ('error' in data) {
+          // data: ErrorData
           throw Error(data.error)
         }
 
         const balanceUSD = toLocalePrice(parseFloat(balance) * data.price)
         const activity = await getLatestTransactions(address, 5)
 
-        appDispatch({ address, balance, balanceUSD, activity })
+        appDispatch({
+          address,
+          balance,
+          balanceUSD,
+          activity,
+          isConnected: true,
+        })
 
         notifySuccessfulConnection(balance)
       } catch (err) {
@@ -56,9 +69,10 @@ export default function useConnectButton() {
         setConnecting(false)
       }
     }
-  }, [appState.address])
+  }, [isConnected])
 
-  const clickDisconnect = useCallback(async () => {
+  const onDisconnectClick = useCallback(async () => {
+    // TODO: Implement
     messageApi.warning('Not yet implemented')
   }, [])
 
@@ -66,7 +80,7 @@ export default function useConnectButton() {
     appState,
     connecting,
     messageHolder,
-    clickConnect,
-    clickDisconnect,
+    onConnectClick,
+    onDisconnectClick,
   }
 }

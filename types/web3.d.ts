@@ -1,2 +1,2 @@
 type Address = string
-type Amount = string // amounts are always presented as strings
+type Amount = string // web3.js returns amounts as strings

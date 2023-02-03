@@ -1,8 +1,13 @@
+/**
+ * Will help our scripts to get ready the contracts for testing
+ */
+
 const Web3 = require('web3')
 const HDWalletProvider = require('@truffle/hdwallet-provider')
 
 require('dotenv').config()
 
+// See .env.example file
 const { MNEMONIC, NEXT_PUBLIC_PROJECT_URL, NEXT_PUBLIC_NETWORK_ID } =
   process.env
 
