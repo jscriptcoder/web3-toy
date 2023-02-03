@@ -51,14 +51,11 @@ export default function useConnectButton() {
         }
 
         const balanceUSD = toLocalePrice(parseFloat(balance) * data.price)
-        const { activity, receipts } = await getLatestTransactions(address, 5)
 
         appDispatch({
           address,
           balance,
           balanceUSD,
-          activity,
-          receipts,
           isConnected: true,
         })
 

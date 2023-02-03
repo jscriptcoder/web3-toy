@@ -6,8 +6,7 @@ import AccountMenu from './AccountMenu'
 import useContent from './useContent'
 
 export default function Content() {
-  const { address, balance, balanceUSD, isConnected, activity, receipts } =
-    useContent()
+  const { address, balance, balanceUSD, isConnected } = useContent()
 
   return (
     <Layout.Content>
@@ -25,11 +24,7 @@ export default function Content() {
               <Divider />
               <AmountPane balance={balance} balanceUSD={balanceUSD} />
               <Divider />
-              <ActivityPane
-                address={address}
-                activity={activity}
-                receipts={receipts}
-              />
+              <ActivityPane address={address} />
             </>
           )}
         </div>

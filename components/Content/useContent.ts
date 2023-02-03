@@ -30,5 +30,5 @@ export default function useContent() {
     }
   }, [])
 
-  return { address, balance, balanceUSD, isConnected, activity, receipts }
+  return { address, balance, balanceUSD, isConnected }
 }

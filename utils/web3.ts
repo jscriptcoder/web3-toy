@@ -8,6 +8,7 @@ import Web3 from 'web3'
 import type { Transaction, TransactionReceipt } from 'web3-core'
 import type { EventData } from 'web3-eth-contract'
 import tokenVestingJson from '../artifacts/TokenVesting.json'
+import tokenVestingLiveJson from '../artifacts/TokenVesting.live.json'
 import { assert } from './check'
 import emitter from './emitter'
 
@@ -18,10 +19,13 @@ type NetworkSettings = Record<string, { address: Address }>
 const projectUrl = process.env['NEXT_PUBLIC_PROJECT_URL']
 const networkId = process.env['NEXT_PUBLIC_NETWORK_ID']
 
-const networkSettings = tokenVestingJson.networks as NetworkSettings
+// const networkSettings = tokenVestingJson.networks as NetworkSettings
+const networkSettings = tokenVestingLiveJson.networks as NetworkSettings
 
 // We can find the ABI in the contract artifact generated on compilation
-const contractAbi = tokenVestingJson.abi as unknown as AbiItem
+// const contractAbi = tokenVestingJson.abi as unknown as AbiItem
+const contractAbi = tokenVestingLiveJson.abi as unknown as AbiItem
+
 const contractAddress = networkSettings[networkId ?? 5777].address as Address
 
 console.log('[web3.ts] Contract address:', contractAddress)
@@ -30,6 +34,8 @@ export const web3 = new Web3(Web3.givenProvider ?? projectUrl)
 
 // Will help us to interact with the contract
 export const contract = new web3.eth.Contract(contractAbi, contractAddress)
+
+// ========================================================== //
 
 /**
  * This function will prompt the user for permission to connect their wallet
@@ -62,17 +68,22 @@ export async function getBalance(address: Address): Promise<Amount> {
  * @param activity List of transactions. Will be mutated
  * @param blockHash Hash of the current block
  * @param limit How many transactions we want to gather
+ * @param depth How many blocks we want to check
+ * @param recursion Counts how many times the function has been called
  */
 async function gatherActivity(
   address: string,
   activity: Transaction[],
   blockHash = 'latest',
   limit = 5,
+  depth = 5,
+  recursion = 0,
 ): Promise<void> {
   // Exit condition
   if (
     activity.length === limit ||
-    (blockHash !== 'latest' && !Number(blockHash))
+    (blockHash !== 'latest' && !Number(blockHash)) ||
+    recursion === depth // otherwise we might end up going through the entire chain
   ) {
     return
   }
@@ -98,23 +109,32 @@ async function gatherActivity(
     }
   })
 
-  return gatherActivity(address, activity, parentHash, limit)
+  return gatherActivity(
+    address,
+    activity,
+    parentHash,
+    limit,
+    depth,
+    (recursion += 1),
+  )
 }
 
 /**
  * Gathers the activity of an account
  * @param address
- * @param howMany Amount to transactions we want to return
+ * @param transactions Amount to transactions we want to return
+ * @param blocks Amount to blocks to go through
  * @returns The latest transactions and their receipts
  */
 export async function getLatestTransactions(
   address: Address,
-  howMany: number,
+  transactions?: number,
+  blocks?: number,
 ): Promise<{ activity: Transaction[]; receipts: TransactionReceipt[] }> {
   assert(!address, '[getLatestTransactions] Missing "address" argument')
 
   const activity: Transaction[] = []
-  await gatherActivity(address, activity, 'latest', howMany)
+  await gatherActivity(address, activity, 'latest', transactions, blocks)
 
   console.log('[getLatestTransactions] Activity:', activity)
 
