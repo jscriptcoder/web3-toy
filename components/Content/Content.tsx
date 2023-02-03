@@ -1,15 +1,13 @@
-import { useMemo } from 'react'
 import { Divider, Layout } from 'antd'
 import AmountPane from './AmountPane'
 import ActivityPane from './ActivityPane'
 import AccountPane from './AccountPane'
 import AccountMenu from './AccountMenu'
-import { useAppContext } from '../../context/appStore'
+import useContent from './useContent'
 
 export default function Content() {
-  const [appState] = useAppContext()
   const { address, balance, balanceUSD, isConnected, activity, receipts } =
-    appState
+    useContent()
 
   return (
     <Layout.Content>

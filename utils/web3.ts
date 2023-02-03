@@ -6,8 +6,10 @@
 
 import Web3 from 'web3'
 import type { Transaction, TransactionReceipt } from 'web3-core'
+import type { EventData } from 'web3-eth-contract'
 import tokenVestingJson from '../artifacts/TokenVesting.json'
 import { assert } from './check'
+import emitter from './emitter'
 
 // Network settings have more properties, but we're only interested in the `address`
 type NetworkSettings = Record<string, { address: Address }>
@@ -147,11 +149,7 @@ export async function getTotalVesting(from: Address): Promise<Amount> {
  */
 export async function claimTokens(address: Address): Promise<void> {
   assert(!address, '[claimTokens] Missing "address" argument')
-
-  const tx = await contract.methods.claimTokens(address).send({ from: address })
-  console.log('[claimTokens] Transaction:', tx)
-
-  return tx
+  return contract.methods.claimTokens(address).send({ from: address })
 }
 
 /**
@@ -171,3 +169,13 @@ export function toEther(amount: Amount): Amount {
 export function toGwei(amount: Amount): Amount {
   return web3.utils.fromWei(amount.toString(), 'gwei')
 }
+
+// We want to inform to the Frontend when the contract emits TokensClaimed event
+// passing the event object, which contains all the details sent in the event.
+contract.events.TokensClaimed((error: Error, event: EventData) => {
+  if (error) {
+    emitter.emit('error-claiming-tokens', error)
+  } else {
+    emitter.emit('tokens-claimed', event)
+  }
+})

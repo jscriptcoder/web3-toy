@@ -1,6 +1,7 @@
 import { MenuOutlined } from '@ant-design/icons'
-import { Button, Dropdown, message } from 'antd'
+import { Button, Dropdown, message, notification } from 'antd'
 import { useCallback, useMemo, useState } from 'react'
+import type { Transaction } from 'web3-core'
 import { notifyError } from '../../utils/notify'
 import { toLocalePrice } from '../../utils/numeral'
 import { claimTokens, getTotalVesting } from '../../utils/web3'
@@ -8,6 +9,13 @@ import Loading from '../Loading'
 
 interface AccountMenuProps {
   address: Address
+}
+
+function notifySuccessTransaction(tx: Transaction): void {
+  notification.success({
+    message: 'Successfully tokens claimed.',
+    description: <div>TODO</div>,
+  })
 }
 
 export default function AccountMenu({ address }: AccountMenuProps) {
@@ -34,9 +42,7 @@ export default function AccountMenu({ address }: AccountMenuProps) {
     setQuerying(true)
 
     try {
-      const tx = await claimTokens(address)
-      // TODO
-      console.log(tx)
+      await claimTokens(address)
     } catch (err) {
       console.error('[onClaimTokensClick] Error:', err)
       notifyError('Error claiming tokens', err)
