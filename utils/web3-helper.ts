@@ -1,6 +1,6 @@
 import Web3 from 'web3'
 import tokenVestingJson from '../artifacts/TokenVesting.json'
-import tokenVestingLiveJson from '../artifacts/TokenVesting.live.json'
+import tokenVestingLiveJson from '../artifacts/TokenVesting.mainnet.json'
 
 function getAbi(neckworkId?: string) {
   return (neckworkId === '1'

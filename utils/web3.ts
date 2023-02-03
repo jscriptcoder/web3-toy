@@ -8,7 +8,7 @@ import type { Transaction, TransactionReceipt } from 'web3-core'
 import type { EventData } from 'web3-eth-contract'
 import { assert } from './check'
 import emitter from './emitter'
-import { web3, contract } from './_web3-helper'
+import { web3, contract } from './web3-helper'
 
 /**
  * This function will prompt the user for permission to connect their wallet
