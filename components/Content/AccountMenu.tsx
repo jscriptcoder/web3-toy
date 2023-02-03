@@ -60,7 +60,7 @@ export default function AccountMenu({ address }: AccountMenuProps) {
       },
       {
         key: 'claim',
-        label: 'Cliam Tokens',
+        label: 'Claim Tokens',
         onClick: onClaimTokensClick,
       },
     ],
