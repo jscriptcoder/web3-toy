@@ -160,5 +160,14 @@ export async function claimTokens(address: Address): Promise<void> {
  * @returns Amount in ether units
  */
 export function toEther(amount: Amount): Amount {
-  return web3.utils.fromWei(amount.toString())
+  return web3.utils.fromWei(amount.toString(), 'ether')
+}
+
+/**
+ * Converts wei to gwei
+ * @param amount in wei units
+ * @returns Amount in gwei units
+ */
+export function toGwei(amount: Amount): Amount {
+  return web3.utils.fromWei(amount.toString(), 'gwei')
 }
