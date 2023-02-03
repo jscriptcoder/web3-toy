@@ -4,38 +4,11 @@
  * TokenPrivider smart contract.
  */
 
-import Web3 from 'web3'
 import type { Transaction, TransactionReceipt } from 'web3-core'
 import type { EventData } from 'web3-eth-contract'
-import tokenVestingJson from '../artifacts/TokenVesting.json'
-import tokenVestingLiveJson from '../artifacts/TokenVesting.live.json'
 import { assert } from './check'
 import emitter from './emitter'
-
-// Network settings have more properties, but we're only interested in the `address`
-type NetworkSettings = Record<string, { address: Address }>
-
-// See .env.example
-const projectUrl = process.env['NEXT_PUBLIC_PROJECT_URL']
-const networkId = process.env['NEXT_PUBLIC_NETWORK_ID']
-
-// const networkSettings = tokenVestingJson.networks as NetworkSettings
-const networkSettings = tokenVestingLiveJson.networks as NetworkSettings
-
-// We can find the ABI in the contract artifact generated on compilation
-// const contractAbi = tokenVestingJson.abi as unknown as AbiItem
-const contractAbi = tokenVestingLiveJson.abi as unknown as AbiItem
-
-const contractAddress = networkSettings[networkId ?? 5777].address as Address
-
-console.log('[web3.ts] Contract address:', contractAddress)
-
-export const web3 = new Web3(Web3.givenProvider ?? projectUrl)
-
-// Will help us to interact with the contract
-export const contract = new web3.eth.Contract(contractAbi, contractAddress)
-
-// ========================================================== //
+import { web3, contract } from './_web3-helper'
 
 /**
  * This function will prompt the user for permission to connect their wallet

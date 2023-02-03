@@ -27,7 +27,6 @@ function notifySuccessfulConnection(balance: Amount): void {
 }
 
 export default function useConnectButton() {
-  const [messageApi, messageHolder] = message.useMessage()
   const [connecting, setConnecting] = useState(false)
   const [appState, appDispatch] = useAppContext()
 
@@ -71,13 +70,12 @@ export default function useConnectButton() {
 
   const onDisconnectClick = useCallback(async () => {
     // TODO: Implement
-    messageApi.warning('Not yet implemented')
+    message.warning('Not yet implemented')
   }, [])
 
   return {
     appState,
     connecting,
-    messageHolder,
     onConnectClick,
     onDisconnectClick,
   }

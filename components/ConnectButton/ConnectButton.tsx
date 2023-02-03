@@ -9,13 +9,8 @@ interface ConnectButtonProps {
 }
 
 export default function ConnectButton({ label }: ConnectButtonProps) {
-  const {
-    appState,
-    connecting,
-    messageHolder,
-    onConnectClick,
-    onDisconnectClick,
-  } = useConnectButton()
+  const { appState, connecting, onConnectClick, onDisconnectClick } =
+    useConnectButton()
 
   const { address, balance } = appState
 
@@ -66,7 +61,6 @@ export default function ConnectButton({ label }: ConnectButtonProps) {
 
   return (
     <div className="ConnectButton">
-      {messageHolder}
       <Button onClick={onConnectClick}>{ButtonContent}</Button>
       <Loading
         show={connecting}

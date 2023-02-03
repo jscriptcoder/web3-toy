@@ -17,7 +17,7 @@ export default function AmountPane({ balance, balanceUSD }: AmountPaneProps) {
         width={32}
         height={0}
       />
-      <Title level={2} className="text-shadow">
+      <Title level={3} className="text-shadow">
         {balance} <small>ETH</small>
       </Title>
       <Text>
