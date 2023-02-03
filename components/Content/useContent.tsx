@@ -20,7 +20,7 @@ function notifySuccessTransaction({
     description: (
       <div>
         Your have successfully claimed <strong>{tokensClaimed_}</strong> tokens
-        into the account <strong>{destination_}</strong>
+        from the account <strong>{destination_}</strong>
       </div>
     ),
   })
