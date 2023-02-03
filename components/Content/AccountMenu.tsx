@@ -11,13 +11,6 @@ interface AccountMenuProps {
   address: Address
 }
 
-function notifySuccessTransaction(): void {
-  notification.success({
-    message: 'Successfully tokens claimed.',
-    description: <div>TODO</div>,
-  })
-}
-
 export default function AccountMenu({ address }: AccountMenuProps) {
   const [querying, setQuerying] = useState(false)
 
@@ -43,7 +36,6 @@ export default function AccountMenu({ address }: AccountMenuProps) {
 
     try {
       await claimTokens(address)
-      // notifySuccessTransaction()
     } catch (err) {
       console.error('[onClaimTokensClick] Error:', err)
       notifyError('Error claiming tokens', err)

@@ -41,11 +41,24 @@ var MockERC20 = artifacts.require('MockERC20');
 var migration = function (deployer) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, deployer.deploy(MockERC20, 'MockToken', 'MT', 2)];
+            case 0: 
+            // Deploy our mock token
+            return [4 /*yield*/, deployer.deploy(MockERC20, 'MockToken', 'MT', 2)
+                // We need to wait for the previous deployment in order
+                // to pass the address of our mock token to our
+                // TokenVesting smart contract deployment
+            ];
             case 1:
+                // Deploy our mock token
                 _a.sent();
+                // We need to wait for the previous deployment in order
+                // to pass the address of our mock token to our
+                // TokenVesting smart contract deployment
                 return [4 /*yield*/, deployer.deploy(TokenVesting, MockERC20.address)];
             case 2:
+                // We need to wait for the previous deployment in order
+                // to pass the address of our mock token to our
+                // TokenVesting smart contract deployment
                 _a.sent();
                 return [2 /*return*/];
         }

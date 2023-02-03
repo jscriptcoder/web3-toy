@@ -10,16 +10,19 @@ async function setVestingSchedule(receivers, vestingSchedules) {
     .send({ from: account })
 }
 
-setVestingSchedule(
-  ['0xFeEC856534DB03a81b70Afe4edcA9C976C818291'],
-  [
-    {
-      startTime: 1675379777337,
-      cliff: 60000,
-      totalPeriods: 10,
-      timePerPeriod: 60000,
-      totalTokens: 100,
-      tokensClaimed: 0,
-    },
-  ],
-).then(() => process.exit())
+// ================================= //
+
+const account = '0xFeEC856534DB03a81b70Afe4edcA9C976C818291'
+const schedule = {
+  startTime: 1675379777, // Thursday, February 2, 2023 11:16:17 PM
+  cliff: 3600, // 1min
+  totalPeriods: 10,
+  timePerPeriod: 3600, // 1min
+  totalTokens: 100,
+  tokensClaimed: 0,
+}
+
+setVestingSchedule([account], [schedule]).then(() => {
+  console.log(`Set vesting schedule for account ${account}:`, schedule)
+  process.exit()
+})

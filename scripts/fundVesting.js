@@ -22,4 +22,7 @@ const defaultTokens = 1000
 const argTokens = Number(process.argv[2])
 const tokens = Number.isNaN(argTokens) ? defaultTokens : argTokens
 
-fundVesting(tokens).then(() => process.exit())
+fundVesting(tokens).then(() => {
+  console.log(`Contract has been funded with ${tokens} tokens`)
+  process.exit()
+})

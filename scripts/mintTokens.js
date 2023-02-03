@@ -31,4 +31,7 @@ const defaultAmount = 1e6
 const argAmount = Number(process.argv[2])
 const amount = Number.isNaN(argAmount) ? defaultAmount : argAmount
 
-mintToken(amount).then(() => process.exit())
+mintToken(amount).then(() => {
+  console.log(`${amount} tokens minted`)
+  process.exit()
+})

@@ -1,4 +1,4 @@
-import { Descriptions, List, Table } from 'antd'
+import { List } from 'antd'
 import type { Transaction } from 'web3-core'
 import { truncateAddress } from '../../utils/strings'
 import { toEther, toGwei } from '../../utils/web3'

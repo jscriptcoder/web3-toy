@@ -1,12 +1,4 @@
-import {
-  CloseCircleOutlined,
-  SelectOutlined,
-  UploadOutlined,
-} from '@ant-design/icons'
-import { List, Tabs } from 'antd'
-import type { Transaction } from 'web3-core'
-import { truncateAddress } from '../../utils/strings'
-import { toEther } from '../../utils/web3'
+import { Tabs } from 'antd'
 import useActivity from './useActivity'
 
 interface ActivityPaneProps {
