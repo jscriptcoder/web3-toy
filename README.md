@@ -51,16 +51,19 @@ This command will create the contract artifacts with the ABI and contract addres
 Mint tokens with the following script. You can pass de amount of tokens you want to mint:
 ```bash
 $ node scripts/mintTokens.js 1000000
+1000000 tokens minted
 ```
 
 Fund our vesting contract. You can pass the amount of tokens:
 ```bash
 $ node scripts/fundVesting.js 1000
+Contract has been funded with 1000 tokens
 ```
 
 Set a vesting schedule for a given account passed as argument:
 ```bash
 $ node scripts/setVestingSchedule.js 0xFeEC856534DB03a81b70Afe4edcA9C976C818291
+Set vesting schedule for account 0xFeEC856534DB03a81b70Afe4edcA9C976C818291
 ```
 Keep in mind that the schedule is hardcoded in the script. If you want to make changes there, edit the [setVestingSchedule.js](scripts/setVestingSchedule.js) and set the values of the schedule object properties:
 ```js
@@ -77,4 +80,32 @@ const schedule = {
 Now we're ready to go. Run the development environment and go to http://localhost:3000/:
 ```bash
 $ npm run dev
+ready - started server on 0.0.0.0:3000, url: http://localhost:3000
 ```
+<p align="center"><img style="width: 60%;" src="sneak-peek/no_yet_connected.png" /></p>
+
+### Playing around with the app
+
+1. Connect your wallet
+<p align="center">
+<img style="width: 60%;" src="sneak-peek/connecting_with_metamask.png" />
+<img style="width: 60%;" src="sneak-peek/connecting_with_metamask2.png" />
+</p>
+
+2. Wallet successfully connected
+<p align="center">
+<img style="width: 60%;" src="sneak-peek/wallet_connected_success.png" />
+<img style="width: 60%;" src="sneak-peek/connect_btn_tooltip.png" />
+</p>
+
+3. Query vesting tokens
+<p align="center">
+  <img style="width: 60%;" src="sneak-peek/account_menu.png" />
+  <img style="width: 60%;" src="sneak-peek/vesting_tokens.png" />
+</p>
+
+4. Claim tokens
+<p align="center">
+  <img style="width: 60%;" src="sneak-peek/claiming_tokens_metamask.png" />
+  <img style="width: 60%;" src="sneak-peek/tokens_claimed.png" />
+</p>
