@@ -12,7 +12,7 @@ async function setVestingSchedule(receivers, vestingSchedules) {
 
 // ================================= //
 
-const account = '0xFeEC856534DB03a81b70Afe4edcA9C976C818291'
+const account = process.argv[2]
 const schedule = {
   startTime: 1675379777,
   cliff: 0,
