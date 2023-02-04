@@ -109,3 +109,11 @@ ready - started server on 0.0.0.0:3000, url: http://localhost:3000
   <img style="width: 60%;" src="sneak-peek/claiming_tokens_metamask.png" />
   <img style="width: 60%;" src="sneak-peek/tokens_claimed.png" />
 </p>
+
+### Production deployment
+
+This app has been deployed in Vercel, https://web3-toy.vercel.app/, targetting Ethereum Mainnet, with the following environment variables:
+```
+NEXT_PUBLIC_PROJECT_URL=https://mainnet.infura.io/v3/
+NEXT_PUBLIC_NETWORK_ID=1
+```
