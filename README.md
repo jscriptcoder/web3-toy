@@ -33,7 +33,7 @@ MNEMONIC=...
 NEXT_PUBLIC_PROJECT_URL=http://127.0.0.1:7545
 NEXT_PUBLIC_NETWORK_ID=5777
 ```
-The `MNEMONIC` 12 words are provided by Ganache. This is important because we're gonna be deploying the contracts, mint MockERC20 tokens, fund TokenVesting and set vesting schedule in order to later on test functionality with one of our accounts.
+The `MNEMONIC` 12 words are provided by Ganache. This is important because we're gonna be deploying the contracts, mint MockERC20 tokens, fund TokenVesting and set vesting schedule in order to later on test functionality with one of our accounts. The contracts can be found under [contracts](contracts/) folder.
 
 Create a new network, local network, in Metamask with the following settings:
 <p align="center"><img style="width: 60%;" src="sneak-peek/localhost_network_settings.png" /></p>
@@ -46,7 +46,7 @@ Compile and deploy contracts:
 ```bash
 $ npm run migrate
 ```
-This command will create the contract artifacts with the ABI and contract address, which will be used by the Frontend to interact with the them (see [web3-helper.ts](utils/web3-helper.ts))
+This command will create the contract artifacts with the ABI and contract address, which will be used by the Frontend to interact with the them (see [web3-helper.ts](utils/web3-helper.ts) and [web3.ts](utils/web3.ts))
 
 Mint tokens with the following script. You can pass de amount of tokens you want to mint:
 ```bash
@@ -112,7 +112,7 @@ ready - started server on 0.0.0.0:3000, url: http://localhost:3000
 
 ### Production deployment
 
-This app has been deployed in Vercel, https://web3-toy.vercel.app/, targetting Ethereum Mainnet, with the following environment variables:
+This app has been deployed in Vercel, https://web3-toy.vercel.app/, targetting the contract [TokenVesting](https://etherscan.io/address/0xb3f723783e67471F2469C3fc49E2905d5FabeE1d) (see [ABI](https://github.com/jscriptcoder/web3-toy/blob/main/artifacts/TokenVesting.mainnet.json)) deployed on the Ethereum mainnet, with the following environment variables:
 ```
 NEXT_PUBLIC_PROJECT_URL=https://mainnet.infura.io/v3/
 NEXT_PUBLIC_NETWORK_ID=1
