@@ -2,7 +2,9 @@
 
 <p align="center"><img style="width: 60%;" src="sneak-peek/wallet_details.png" /></p>
 
-This is a toy project, a simple React application that allows a user to connect their web3 wallet (XDEFI, Metamask, etc) to interact with a smart contract on the Ethereum blockchain.
+Simple React application that allows a user to connect their web3 wallet (XDEFI, Metamask, etc) to interact with a smart contract on the Ethereum blockchain.
+
+Latest deployment: https://web3-toy.vercel.app/
 
 ## Getting Started
 
