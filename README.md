@@ -1,4 +1,4 @@
-# Web3 Toy [Home Assignment Test]
+# Web3 Wallet - Home Assignment Test
 
 <p align="center"><img style="width: 60%;" src="sneak-peek/wallet_details.png" /></p>
 
